@@ -57,7 +57,9 @@ function main() {
   console.log(`reports=${reports.length}`);
 }
 
-main().catch((err) => {
+try {
+  main();
+} catch (err) {
   console.error('FATAL:', err);
   process.exit(1);
-});
+}

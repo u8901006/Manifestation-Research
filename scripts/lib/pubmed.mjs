@@ -26,8 +26,8 @@ export async function esearch(query, opts = {}) {
   const params = new URLSearchParams({
     db: 'pubmed',
     term: query,
-    retMax: String(retMax),
-    retMode: 'json',
+    retmax: String(retMax),
+    retmode: 'json',
     sort: 'date',
   });
 
@@ -57,7 +57,7 @@ export async function esummary(pmids) {
     const params = new URLSearchParams({
       db: 'pubmed',
       id: batch.join(','),
-      retMode: 'json',
+      retmode: 'json',
     });
     if (API_KEY) params.set('api_key', API_KEY);
 
