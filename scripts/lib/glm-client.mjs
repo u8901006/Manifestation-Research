@@ -1,6 +1,8 @@
 // Zhipu (BigModel) GLM API client with model fallback chain.
 // Uses the coding-plan endpoint. Robust JSON parsing with fault tolerance.
 
+import crypto from 'node:crypto';
+
 const GLM_BASE_URL = process.env.GLM_BASE_URL || 'https://open.bigmodel.cn/api/coding/paas/v4';
 const TIMEOUT_MS = parseInt(process.env.GLM_TIMEOUT_MS || '480000', 10); // 480s default
 const MAX_TOKENS = parseInt(process.env.GLM_MAX_TOKENS || '50000', 10);
@@ -10,6 +12,42 @@ const MODEL_CHAIN = (process.env.GLM_MODELS || 'GLM-5-Turbo,GLM-4.7,GLM-4.7-Flas
   .split(',')
   .map((m) => m.trim())
   .filter(Boolean);
+
+/**
+ * Generate a Zhipu JWT token from the API key.
+ * The API key format is "{id}.{secret}". We sign a JWT with HS256.
+ * @param {string} apiKey
+ * @returns {string} JWT token string
+ */
+function generateZhipuToken(apiKey) {
+  const parts = apiKey.split('.');
+  if (parts.length < 2) {
+    // If not in id.secret format, return as-is (might work as direct Bearer)
+    return apiKey;
+  }
+  const [id, secret] = parts;
+
+  const header = { alg: 'HS256', sign_type: 'SIGN' };
+  const now = Date.now();
+  const payload = {
+    api_key: id,
+    exp: now + 3600 * 1000, // 1 hour expiry
+    timestamp: now,
+  };
+
+  const encodedHeader = Buffer.from(JSON.stringify(header))
+    .toString('base64url');
+  const encodedPayload = Buffer.from(JSON.stringify(payload))
+    .toString('base64url');
+  const signingInput = `${encodedHeader}.${encodedPayload}`;
+
+  const signature = crypto
+    .createHmac('sha256', secret)
+    .update(signingInput)
+    .digest('base64url');
+
+  return `${signingInput}.${signature}`;
+}
 
 /**
  * Call GLM chat completions with automatic model fallback.
@@ -70,7 +108,7 @@ async function callOnce(model, messages, opts) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.ZHIPU_API_KEY}`,
+        Authorization: `Bearer ${generateZhipuToken(process.env.ZHIPU_API_KEY)}`,
       },
       body: safeJsonStringify(body),
       signal: controller.signal,
