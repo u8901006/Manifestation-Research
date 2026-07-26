@@ -108,7 +108,7 @@ async function callOnce(model, messages, opts) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${generateZhipuToken(process.env.ZHIPU_API_KEY)}`,
+        Authorization: `Bearer ${process.env.ZHIPU_API_KEY}`,
       },
       body: safeJsonStringify(body),
       signal: controller.signal,
