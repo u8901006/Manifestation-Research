@@ -1,0 +1,15 @@
+{
+  "name": "manifestation-research",
+  "version": "1.0.0",
+  "description": "顯化研究文獻周報 — 每週自動從 PubMed 搜尋並由 GLM-5-Turbo 分析",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "fetch": "node scripts/fetch-papers.mjs",
+    "report": "node scripts/generate-report.mjs",
+    "index": "node scripts/generate-index.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
