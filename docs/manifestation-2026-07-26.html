@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年7月26日</title>
+<meta name="description" content="2026年7月26日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年7月26日（週日）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + GLM-5-Turbo</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週的60篇文獻中，後30篇高度聚焦於「期望與安慰劑效應」，為顯化研究提供了豐富的實證基礎。核心趨勢顯示，開放標籤安慰劑在心理困擾（如心臟焦慮）和生理指標（如頭髮皮質醇）上展現出顯著療效，且受個體人格特質調節。同時，研究強調了「期望」作為關鍵變數，能直接調節正念等心理介入的效果；而「反安慰劑效應」則揭示了負面語言與焦慮的社會傳播如何透過預測處理機制惡化健康結果。此外，多項系統性文獻回顧探討了物質成癮、偏頭痛及化療等領域中的安慰劑反應規模。前30篇文獻多為醫學疾病「症狀表現」的關鍵字誤匹配，僅少數涉及壓力負荷與自我效能。總體而言，本週文獻強化了「信念與期望能實質改變身心狀態」的科學證據，對顯化實務中的心智意象與自我暗示運用具有重要啟示。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>開放標籤安慰劑對心血管疾病住院患者心臟焦慮的療效：一項隨機對照試驗</h3>
+          <p class="journal-source">Journal of psychosomatic research &middot; Efficacy of open-label placebos for cardiac anxiety in inpatients with cardiovascular disease: A randomized controlled trial</p>
+          <p>本研究探討了開放標籤安慰劑（告知患者這是安慰劑）對心血管疾病住院患者心臟焦慮的影響。隨機對照試驗（RCT）結果顯示，相較於對照組，接受開放標籤安慰劑的患者在心臟焦慮症狀上獲得顯著減輕。此研究直接證實了「信念本身」即使在没有欺骗的情况下，仍能產生強大的心理生理療效，為顯化實務中「正向期望不需依附於特定物質」提供了臨床級別的證據。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">心血管疾病住院患者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">開放標籤安慰劑介入</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">常規治療對照組</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">心臟焦慮症狀顯著減輕</span></div></div>
+          <div class="card-footer">
+            <span class="tag">開放標籤安慰劑</span><span class="tag">心臟焦慮</span><span class="tag">期望效應</span><span class="tag">RCT</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42492114/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">🎯</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>優化期望能提升基線期望值較低者正念介入的療效：一項隨機對照試驗</h3>
+          <p class="journal-source">Journal of clinical psychology &middot; Optimizing Expectations Leads to Enhanced Efficacy of a Mindfulness-Based Intervention in Individuals With Low-Baseline Expectations: A Randomized Controlled Trial</p>
+          <p>針對基線期望較低的個體，研究測試了在正念介入前加入「期望優化」模組的效果。RCT結果表明，預先提升期望能顯著增強正念介入的整體療效。這意味著在顯化過程中，如果個體初始的自我效能或信念不足，透過特定策略先「安裝」正向期望，能大幅放大後續心智練習（如視覺化）的顯化效果。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">基線期望值較低的個體</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">期望優化結合正念介入</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">單純正念介入</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">介入療效顯著提升</span></div></div>
+          <div class="card-footer">
+            <span class="tag">期望優化</span><span class="tag">正念</span><span class="tag">自我效能</span><span class="tag">介入調節</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42478332/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🧬</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>開放標籤安慰劑對心理困擾與頭髮皮質醇的影響：五大人格特質的調節作用</h3>
+          <p class="journal-source">Comprehensive psychoneuroendocrinology &middot; Open-label placebo effects on psychological distress and hair cortisol in a randomized controlled trial - the moderating role of the five-factor personality traits</p>
+          <p>此RCT不僅再次驗證了開放標籤安慰劑能降低心理困擾，更首度透過頭髮皮質醇（長期壓力指標）證實其生理層面的壓力調節作用。研究發現五大人格特質（如盡責性、神經質）在其中起調節作用。這為顯化研究提供了「心智信念可轉化為內分泌實體變化」的神經內分泌學證據。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">經歷心理困擾的成年人</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">開放標籤安慰劑</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無介入等待名單</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">心理困擾降低且頭髮皮質醇水準下降</span></div></div>
+          <div class="card-footer">
+            <span class="tag">頭髮皮質醇</span><span class="tag">神經內分泌</span><span class="tag">人格特質</span><span class="tag">開放標籤安慰劑</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42438686/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#4</span>
+            <span class="emoji-icon">🔍</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>哪些因素影響信念對健康介入的作用？一項多學科範圍綜述</h3>
+          <p class="journal-source">Journal of psychosomatic research &middot; What factors influence how belief impacts health interventions? A multidisciplinary scoping review</p>
+          <p>本範圍綜述系統性地梳理了跨學科文獻，找出影響「信念」轉化為健康效果的五大核心因素。研究整合了心理學、神經科學與醫學視角，為理解「為什麼有些人能成功顯化健康，有些人卻不能」提供了理論框架，指出個體差異、情境脈絡與信念強度之間的複雜交互作用。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">跨學科健康介入文獻</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">系統性範圍綜述</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無對照組</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">歸納出影響信念發揮作用的五項核心因素</span></div></div>
+          <div class="card-footer">
+            <span class="tag">信念形成</span><span class="tag">理論框架</span><span class="tag">範圍綜述</span><span class="tag">個體差異</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42435514/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#5</span>
+            <span class="emoji-icon">🗣️</span>
+            <span class="utility-mid">中實用性</span>
+          </div>
+          <h3>塑造照護中的期望：減少反安慰劑效應之溝通策略的範圍綜述</h3>
+          <p class="journal-source">Patient education and counseling &middot; Shaping expectations in care: A scoping review of experimental and clinical evidence on communication strategies to reduce the nocebo effect</p>
+          <p>本綜述聚焦於醫療溝通如何「塑造期望」以減少反安慰劑效應（因負面期望導致的副作用）。研究指出，醫護人員的語言框架直接影響患者的預測處理機制。對顯化實務而言，這反向印證了「語言決定現實」：避免負面暗示與重新框架是維持正向顯化狀態的關鍵技術。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">臨床照護情境中的患者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">正向期望溝通策略</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">常規或負向溝通</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">反安慰劑效應與不良反應降低</span></div></div>
+          <div class="card-footer">
+            <span class="tag">反安慰劑效應</span><span class="tag">語言框架</span><span class="tag">溝通策略</span><span class="tag">預測處理</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42320075/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>乳糜瀉試驗中霍桑效應與其他試驗相關效應的評估</h3>
+          <p class="journal-source">Digestive and liver disease</p>
+          <p>透過系統性文獻回顧與統合分析，探討乳糜瀉臨床試驗中受試者因「被關注」而改變行為的霍桑效應，凸顯了期望與關注本身對健康結果的干擾。</p>
+          <div class="card-footer">
+            <span class="tag">霍桑效應</span><span class="tag">系統性回顧</span><span class="tag">期望</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42498599/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>焦慮社會傳播中的反安慰劑機制</h3>
+          <p class="journal-source">The British journal of psychiatry</p>
+          <p>探討焦慮如何透過社會傳播引發反安慰劑效應，說明群體間的負面信念共享會觸發神經系統的預測誤差，進而產生實質的生理不適。</p>
+          <div class="card-footer">
+            <span class="tag">反安慰劑</span><span class="tag">社會傳播</span><span class="tag">焦慮</span><span class="tag">預測處理</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42204911/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>治癒與傷害的言語：語言在疼痛感知中的力量</h3>
+          <p class="journal-source">Frontiers in pain research</p>
+          <p>回顧性論文指出，醫療人員使用的語言能直接調節大腦的疼痛矩陣，正面的語言能啟動安慰劑止痛途徑，負面言語則加劇疼痛感知。</p>
+          <div class="card-footer">
+            <span class="tag">語言暗示</span><span class="tag">疼痛感知</span><span class="tag">安慰劑止痛</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42338926/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>急性偏頭痛試驗中安慰劑反應的規模與決定因素</h3>
+          <p class="journal-source">Neurology</p>
+          <p>系統性文獻回顧與統合分析發現，偏頭痛試驗中安慰劑反應率極高，且受試驗規模、劑量頻率與患者期望強烈影響。</p>
+          <div class="card-footer">
+            <span class="tag">偏頭痛</span><span class="tag">安慰劑反應</span><span class="tag">統合分析</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42430679/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>重新定義迷幻藥試驗中的真正問題：為何對抗 Lessebo 比盲法完整性更重要</h3>
+          <p class="journal-source">The International journal on drug policy</p>
+          <p>指出迷幻藥臨床試驗中，受試者極易破解盲法產生強烈期望，這種期望效應（Lessebo）才是療效的主要來源，挑戰了藥物本身的絕對效用。</p>
+          <div class="card-footer">
+            <span class="tag">迷幻藥</span><span class="tag">期望效應</span><span class="tag">臨床試驗方法學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42418940/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>超短程與標準長度數位治療的信度與期望：對治療結果的初步影響</h3>
+          <p class="journal-source">The British journal of clinical psychology</p>
+          <p>探討數位心理健康介入的長度如何影響患者的治療期望與信度，發現期望水準直接預測了最終的治療成效。</p>
+          <div class="card-footer">
+            <span class="tag">數位治療</span><span class="tag">期望</span><span class="tag">治療信度</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42219695/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>酒精、古柯鹼與甲基安非他命使用障礙中的安慰劑效應：系統性文獻回顧與統合分析</h3>
+          <p class="journal-source">The Journal of clinical psychiatry</p>
+          <p>分析物質使用障礙領域的安慰劑反應，發現即便在成癮治療中，安慰劑與期望效應仍佔據臨床改善的顯著比例。</p>
+          <div class="card-footer">
+            <span class="tag">物質成癮</span><span class="tag">安慰劑效應</span><span class="tag">統合分析</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42283541/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>學校氣氛如何影響教師創新：教師自主性與自我效能的鏈式中介作用</h3>
+          <p class="journal-source">Frontiers in psychology</p>
+          <p>研究表明環境氛圍透過提升自主性與自我效能感，進而促進創新行為，間接支持了「環境暗示塑造自我信念與行為表現」的顯化邏輯。</p>
+          <div class="card-footer">
+            <span class="tag">自我效能</span><span class="tag">環境暗示</span><span class="tag">鏈式中介</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42441241/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>異質性負荷壓力狀態：壓力相關障礙症早期識別與分層干預的新框架</h3>
+          <p class="journal-source">Zhonghua yi xue za zhi</p>
+          <p>提出異質性負荷作為慢性壓力累積的生理指標框架，探討壓力如何從心理預期轉化為多系統生理失調，為理解負面顯化的生理代價提供基礎。</p>
+          <div class="card-footer">
+            <span class="tag">異質性負荷</span><span class="tag">慢性壓力</span><span class="tag">生理失調</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42477933/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>安慰劑效應與信仰習慣的漫長歷史：一幅中世紀圖像如何揭示無形的力量</h3>
+          <p class="journal-source">Journal of the Royal Society of Medicine</p>
+          <p>從歷史與文化角度剖析安慰劑效應，指出「信念習慣」在人類歷史中一直扮演著治癒角色，為顯化現象提供了深遠的歷史與人類學背書。</p>
+          <div class="card-footer">
+            <span class="tag">安慰劑歷史</span><span class="tag">信念習慣</span><span class="tag">文化心理學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42366932/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">期望與安慰劑效應</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">25</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">反安慰劑與語言溝通</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:16%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">臨床試驗方法學與期望偏差</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:24%"></div></div>
+          <span class="topic-count">6</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">醫學症狀表現 (Direct Manifestation 誤匹配)</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:80%"></div></div>
+          <span class="topic-count">20</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">壓力、認知與自我效能</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:20%"></div></div>
+          <span class="topic-count">5</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">開放標籤安慰劑</span><span class="keyword">期望效應</span><span class="keyword">反安慰劑效應</span><span class="keyword">信念形成</span><span class="keyword">正念介入</span><span class="keyword">頭髮皮質醇</span><span class="keyword">心臟焦慮</span><span class="keyword">自我效能</span><span class="keyword">隨機對照試驗</span><span class="keyword">霍桑效應</span><span class="keyword">語言框架</span><span class="keyword">疼痛感知</span><span class="keyword">迷幻藥試驗</span><span class="keyword">數位治療</span><span class="keyword">社會傳播</span><span class="keyword">異質性負荷</span><span class="keyword">預測處理</span><span class="keyword">Lessebo效應</span><span class="keyword">系統性回顧</span><span class="keyword">統合分析</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：GLM-5-Turbo</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>

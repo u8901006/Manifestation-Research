@@ -4,17 +4,29 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Manifestation Research · 顯化研究文獻周報</title>
+<meta name="description" content="顯化研究文獻周報 · 每週自動更新，由 AI 自動彙整 PubMed 最新論文"/>
 <style>
   :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; }
-  .container { max-width: 640px; margin: 0 auto; padding: 80px 24px; text-align: center; }
-  .logo { font-size: 48px; margin-bottom: 16px; }
-  h1 { font-size: 24px; margin-bottom: 8px; }
-  .subtitle { color: var(--accent); font-size: 14px; margin-bottom: 24px; }
-  .info { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 32px; }
-  footer { margin-top: 56px; font-size: 12px; color: var(--muted); }
-  footer a { color: var(--muted); text-decoration: none; }
+  .container { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 80px 24px; }
+  .logo { font-size: 48px; text-align: center; margin-bottom: 16px; }
+  h1 { text-align: center; font-size: 24px; color: var(--text); margin-bottom: 8px; }
+  .subtitle { text-align: center; color: var(--accent); font-size: 14px; margin-bottom: 48px; }
+  .count { text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  ul { list-style: none; }
+  li { margin-bottom: 8px; }
+  a { color: var(--text); text-decoration: none; display: block; padding: 14px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; transition: all 0.2s; font-size: 15px; }
+  a:hover { background: var(--accent-soft); border-color: var(--accent); transform: translateX(4px); }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; text-decoration: none; color: var(--text); transition: all 0.2s; }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .ext-link .ext-icon { font-size: 24px; }
+  .ext-link .ext-label { font-size: 12px; font-weight: 600; text-align: center; }
+  footer { margin-top: 56px; text-align: center; font-size: 12px; color: var(--muted); }
+  footer a { display: inline; padding: 0; background: none; border: none; color: var(--muted); }
+  footer a:hover { color: var(--accent); }
+  @media (max-width: 600px) { .links-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -22,7 +34,24 @@
   <div class="logo">✨</div>
   <h1>Manifestation Research</h1>
   <p class="subtitle">顯化研究文獻周報 · 每週自動更新</p>
-  <p class="info">第一期周報即將由 GitHub Actions 自動生成。<br/>排程：每週日 台北時間 05:55。</p>
+  <p class="count">共 1 期周報</p>
+  <ul>
+  <li><a href="manifestation-2026-07-26.html">📅 2026年7月26日（週日） · 📊 60 篇</a></li>
+  </ul>
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+    </a>
+  </div>
   <footer>
     <p>Powered by PubMed + GLM-5-Turbo · <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></p>
   </footer>
