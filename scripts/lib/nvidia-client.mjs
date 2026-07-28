@@ -1,63 +1,31 @@
-// Zhipu (BigModel) GLM API client with model fallback chain.
-// Uses the coding-plan endpoint. Robust JSON parsing with fault tolerance.
+// NVIDIA API client with a long-lived primary/fallback model chain.
+// Uses NVIDIA's OpenAI-compatible chat completions endpoint.
 
-import crypto from 'node:crypto';
+const NVIDIA_API_BASE =
+  process.env.NVIDIA_API_BASE || 'https://integrate.api.nvidia.com/v1';
+const TIMEOUT_MS = parseInt(process.env.NVIDIA_TIMEOUT_MS || '480000', 10);
+const MAX_TOKENS = Math.min(
+  parseInt(process.env.NVIDIA_MAX_TOKENS || '16384', 10),
+  16384
+);
 
-const GLM_BASE_URL = process.env.GLM_BASE_URL || 'https://open.bigmodel.cn/api/coding/paas/v4';
-const TIMEOUT_MS = parseInt(process.env.GLM_TIMEOUT_MS || '480000', 10); // 480s default
-const MAX_TOKENS = parseInt(process.env.GLM_MAX_TOKENS || '50000', 10);
-
-// Model fallback chain: try each in order until one succeeds
-const MODEL_CHAIN = (process.env.GLM_MODELS || 'GLM-5-Turbo,GLM-4.7,GLM-4.7-Flash')
+const MODEL_CHAIN = (
+  process.env.NVIDIA_MODELS ||
+  'nvidia/nemotron-3-super-120b-a12b,nvidia/nemotron-3-nano-30b-a3b'
+)
   .split(',')
   .map((m) => m.trim())
   .filter(Boolean);
 
 /**
- * Generate a Zhipu JWT token from the API key.
- * The API key format is "{id}.{secret}". We sign a JWT with HS256.
- * @param {string} apiKey
- * @returns {string} JWT token string
- */
-function generateZhipuToken(apiKey) {
-  const parts = apiKey.split('.');
-  if (parts.length < 2) {
-    // If not in id.secret format, return as-is (might work as direct Bearer)
-    return apiKey;
-  }
-  const [id, secret] = parts;
-
-  const header = { alg: 'HS256', sign_type: 'SIGN' };
-  const now = Date.now();
-  const payload = {
-    api_key: id,
-    exp: now + 3600 * 1000, // 1 hour expiry
-    timestamp: now,
-  };
-
-  const encodedHeader = Buffer.from(JSON.stringify(header))
-    .toString('base64url');
-  const encodedPayload = Buffer.from(JSON.stringify(payload))
-    .toString('base64url');
-  const signingInput = `${encodedHeader}.${encodedPayload}`;
-
-  const signature = crypto
-    .createHmac('sha256', secret)
-    .update(signingInput)
-    .digest('base64url');
-
-  return `${signingInput}.${signature}`;
-}
-
-/**
- * Call GLM chat completions with automatic model fallback.
+ * Call NVIDIA chat completions with automatic model fallback.
  * @param {Array<{role:string, content:string}>} messages
  * @param {object} opts - { temperature, jsonMode, maxTokens }
  * @returns {Promise<string>} The content string from the response
  */
 export async function chatCompletion(messages, opts = {}) {
   const {
-    temperature = 0.6,
+    temperature = 1.0,
     jsonMode = true,
     maxTokens = MAX_TOKENS,
   } = opts;
@@ -66,12 +34,12 @@ export async function chatCompletion(messages, opts = {}) {
 
   for (const model of MODEL_CHAIN) {
     try {
-      console.error(`[GLM] Trying model: ${model}`);
+      console.error(`[NVIDIA] Trying model: ${model}`);
       const content = await callOnce(model, messages, { temperature, jsonMode, maxTokens });
-      console.error(`[GLM] Success with model: ${model}`);
+      console.error(`[NVIDIA] Success with model: ${model}`);
       return content;
     } catch (err) {
-      console.error(`[GLM] Failed with ${model}: ${err.message}`);
+      console.error(`[NVIDIA] Failed with ${model}: ${err.message}`);
       errors.push({ model, error: err.message });
 
       // Don't retry on auth errors or quota errors — they won't fix with another model
@@ -92,8 +60,10 @@ async function callOnce(model, messages, opts) {
     model,
     messages,
     temperature: opts.temperature,
+    top_p: 0.95,
     max_tokens: opts.maxTokens,
     stream: false,
+    chat_template_kwargs: { enable_thinking: false },
   };
 
   if (opts.jsonMode) {
@@ -104,11 +74,15 @@ async function callOnce(model, messages, opts) {
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
   try {
-    const resp = await fetch(`${GLM_BASE_URL}/chat/completions`, {
+    const apiKey = process.env.NVIDIA_API_KEY;
+    if (!apiKey) {
+      throw new Error('NVIDIA_API_KEY is not set');
+    }
+    const resp = await fetch(`${NVIDIA_API_BASE}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.ZHIPU_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: safeJsonStringify(body),
       signal: controller.signal,

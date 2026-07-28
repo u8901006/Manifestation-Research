@@ -84,13 +84,13 @@ jobs:
         env:
           TARGET_DATE: ${{ steps.date.outputs.target }}
 
-      - name: Generate report with GLM
+      - name: Generate report with NVIDIA Nemotron
         env:
-          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-          GLM_BASE_URL: https://open.bigmodel.cn/api/coding/paas/v4
-          GLM_TIMEOUT_MS: "480000"
-          GLM_MAX_TOKENS: "50000"
-          GLM_MODELS: "GLM-5-Turbo,GLM-4.7,GLM-4.7-Flash"
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          NVIDIA_API_BASE: https://integrate.api.nvidia.com/v1
+          NVIDIA_TIMEOUT_MS: "480000"
+          NVIDIA_MAX_TOKENS: "16384"
+          NVIDIA_MODELS: "nvidia/nemotron-3-super-120b-a12b,nvidia/nemotron-3-nano-30b-a3b"
           REPORT_DATE: ${{ steps.date.outputs.target }}
         run: |
           node scripts/generate-report.mjs \

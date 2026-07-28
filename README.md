@@ -1,6 +1,6 @@
 # Manifestation Research · 顯化研究文獻周報
 
-> 每週自動從 PubMed 搜尋顯化（Manifestation）相關研究文獻，由 GLM-5-Turbo 分析整理成繁體中文週報。
+> 每週自動從 PubMed 搜尋顯化（Manifestation）相關研究文獻，由 NVIDIA Nemotron 3 Super 分析整理成繁體中文週報。
 
 🌐 **線上瀏覽：** https://u8901006.github.io/Manifestation-Research/
 
@@ -23,13 +23,13 @@
 ## 技術架構
 
 ```
-PubMed E-utilities  →  Node.js 24  →  GLM-5-Turbo (Zhipu AI)  →  GitHub Pages
+PubMed E-utilities  →  Node.js 24  →  NVIDIA Nemotron 3 Super  →  GitHub Pages
    (搜尋文獻)          (去重+篩選)      (AI 分析+分類)            (靜態部署)
 ```
 
 - **排程：** 每週日 台北時間 05:55（UTC 週六 21:55）
 - **資料來源：** PubMed E-utilities API
-- **AI 模型：** GLM-5-Turbo（fallback: GLM-4.7 → GLM-4.7-Flash）
+- **AI 模型：** NVIDIA Nemotron 3 Super（fallback: Nemotron 3 Nano）
 - **Token 上限：** 50,000
 - **API 逾時：** 480 秒
 - **去重機制：** `data/seen-papers.json` 記錄所有已總結的 PMID，每週僅處理新文獻
@@ -62,11 +62,11 @@ node scripts/generate-index.mjs
 
 | 變數 | 說明 | 預設值 |
 |------|------|--------|
-| `ZHIPU_API_KEY` | Zhipu AI API 金鑰（**必填**） | — |
-| `GLM_BASE_URL` | GLM API 端點 | `https://open.bigmodel.cn/api/coding/paas/v4` |
-| `GLM_TIMEOUT_MS` | API 逾時（毫秒） | `480000` |
-| `GLM_MAX_TOKENS` | 最大 token 數 | `50000` |
-| `GLM_MODELS` | 模型 fallback 鏈 | `GLM-5-Turbo,GLM-4.7,GLM-4.7-Flash` |
+| `NVIDIA_API_KEY` | NVIDIA API 金鑰（**必填**） | — |
+| `NVIDIA_API_BASE` | NVIDIA API 端點 | `https://integrate.api.nvidia.com/v1` |
+| `NVIDIA_TIMEOUT_MS` | API 逾時（毫秒） | `480000` |
+| `NVIDIA_MAX_TOKENS` | 最大 token 數 | `16384` |
+| `NVIDIA_MODELS` | 模型 fallback 鏈 | `nvidia/nemotron-3-super-120b-a12b,nvidia/nemotron-3-nano-30b-a3b` |
 | `NCBI_API_KEY` | NCBI API 金鑰（可選，提升速率） | — |
 
 ## 相關連結

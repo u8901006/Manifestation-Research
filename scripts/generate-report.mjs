@@ -5,7 +5,7 @@
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { chatCompletion, parseJsonLenient } from './lib/glm-client.mjs';
+import { chatCompletion, parseJsonLenient } from './lib/nvidia-client.mjs';
 import { generateReportHTML, formatDateZh, getWeekdayZh } from './lib/html-template.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

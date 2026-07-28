@@ -228,7 +228,7 @@ ${topics
       <div class="header-meta">
         <span class="badge badge-date">📅 ${escapeHtml(dateZh)}（${escapeHtml(weekdayZh)}）</span>
         <span class="badge badge-count">📊 ${paperCount} 篇文獻</span>
-        <span class="badge badge-source">Powered by PubMed + GLM-5-Turbo</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
       </div>
     </div>
   </header>
@@ -246,7 +246,7 @@ ${topics
   ${linksHtml}
 
   <footer>
-    <span>資料來源：PubMed &middot; 分析模型：GLM-5-Turbo</span>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
     <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
   </footer>
 </div>
@@ -322,7 +322,7 @@ ${listHtml}
     </a>
   </div>
   <footer>
-    <p>Powered by PubMed + GLM-5-Turbo · <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></p>
+    <p>Powered by PubMed + NVIDIA Nemotron 3 Super · <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></p>
   </footer>
 </div>
 </body>
