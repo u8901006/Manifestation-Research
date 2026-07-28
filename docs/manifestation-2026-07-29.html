@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年7月29日</title>
+<meta name="description" content="2026年7月29日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年7月29日（週三）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週文獻聚焦於心智意象、視覺化技術、目標設定與期望效應在健康、行為改變與神經科學中的應用。多篇研究探討心理對比（mental contrasting）、實施意圖（implementation intentions）與樂觀思維如何影響目標達成與心理健康，特別是在慢性病管理、成癮預防與兒童發展領域。神經影像與機器學習技術的融合成為趨勢，用於理解認知過程與行為預測。儘管部份文獻標記為「Direct Manifestation」，但實際內容多屬基礎科學或工程應用，與心理顯化關聯較弱。整體來說，實證研究中，以心理對比與實施意圖為核心的干預策略證據最為充實，具備較高的實用價值。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>心理對比如何改變對現實的顯性與隱性意義以防止負面未來發生</h3>
+          <p class="journal-source">Journal of personality and social psychology &middot; Mental contrasting prevents a negative future by changing the explicit and implicit meaning of reality</p>
+          <p>此研究探討心理對比（mental contrasting）如何透過改變個人對現實的顯性（explicit）與隱性（implicit）解讀，來預防負面未來的發生。透過實驗設計驗證，當個人將理想未來與現實障礙進行對比時，不僅提升目標承諾，亦改變其對現實的潛意義解讀，使行為更符合目標導向。結果顯示心理對比能有效調節動機與行為，特別是在面對誘惑或困難時維持長期目標追求。此機制解釋了為何心理對比在促進健康行為與目標達成方面具有持續效應。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">一般成年人參與者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">心理對比干預（想象理想未來後反思現實障礙）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">僅進行正向幻想或無干預對照組</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">改變對現實的顯性與隱性解讀，增加目標導向行為，減少負面未來預期</span></div></div>
+          <div class="card-footer">
+            <span class="tag">心理對比</span><span class="tag">目標設定</span><span class="tag">無意識過程</span><span class="tag">動機調節</span><span class="tag">行為改變</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42441602/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">📈</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>自發目標相關認知預測成年人幸福感與真實世界目標達成</h3>
+          <p class="journal-source">Research square &middot; Spontaneous Goal-Related Cognition Predicts Well-Being and Real-World Goal Attainment Across Adulthood in a Think-Aloud Study</p>
+          <p>此think-aloud研究探討自發的目標相關認知（spontaneous goal-related cognition）如何預測成年人在不同生命階段的主觀幸福感與真實世界中的目標達成情況。參與者在日常情境中自然思考目標時，其目標相關思考的頻率、具體性與情感調子顯著相關於後續的目標進展與生活滿意度。研究指出，即使沒有刻意的目標設定或干預，個人內在的目標導向思考模式就能預測長期適應性結果。此發現強調內在動機與自發性認知在目標追求中的基礎作用，補充了傳統目標設定理論的限制。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">橫跨成年期的參與者（年輕、中年、老年成人）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">think-aloud程序中自發目標相關認知的自然發生</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無明確對照組，屬相關性預測研究</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">更高的自發目標相關認知預測更高幸福感與更佳真實世界目標達成</span></div></div>
+          <div class="card-footer">
+            <span class="tag">自發認知</span><span class="tag">目標追求</span><span class="tag">幸福感</span><span class="tag">think-aloud</span><span class="tag">橫向研究</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42466412/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🔁</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>實施意圖作為健康行為改變策略的可接受性：來自低社經地位者的思考 aloud 訪談見解</h3>
+          <p class="journal-source">British journal of health psychology &middot; Implementation intentions as an acceptable health behaviour change strategy? Insights from people with lower socio-economic position in think-aloud interviews</p>
+          <p>此質性研究透過think-aloud訪談，探討來自較低社會經濟地位（SES）人群對實施意圖（implementation intentions，即『如果情境X發生，則我將執行行動Y』的計畫）作為健康行為改變策略的可接受性與理解。結果顯示，參與者普遍認為此策略具體、易記且有助於克服慣性與衝動，尤其在面對結構性障礙（如時間不足、資源匱乏）時，能提供明確的行動指引。然而，部分人指出若情境變化過快或缺乏社會支援，則難以持續執行。研究強調，實施意圖在資源有限環境中仍具實用價值，但需配合情境適應性與社會支持以提升長期效果。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">較低社會經濟地位的成年人</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">實施意圖作為健康行為改變策略的介入概念</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無明確對照組，屬探索性質性研究</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">參與者認為實施意圖具體可行，有助於克服自我調節失敗，但受情境穩定性與社會支援影響</span></div></div>
+          <div class="card-footer">
+            <span class="tag">實施意圖</span><span class="tag">健康行為</span><span class="tag">社會經濟地位</span><span class="tag">think-aloud</span><span class="tag">行為改變</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42429031/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#4</span>
+            <span class="emoji-icon">🎯</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>情境導向 vs 結果導向的情景未來思考對 ADHD 與非 ADHD 者日常前瞻性記憶的影響</h3>
+          <p class="journal-source">Journal of experimental psychology. Applied &middot; The impact of process- versus outcome-focused episodic future thinking on everyday prospective memory in individuals with and without attention-deficit/hyperactivity disorder (ADHD)</p>
+          <p>此研究比較情境導向（process-focused）與結果導向（outcome-focused）的情景未來思考（episodic future thinking）對執行日常前瞻性記憶任務的影響，並區分注意力缺陷/多動障礙（ADHD）與非 ADHD 成人。結果顯示，情境導向思考（聚焦於達到目標所需的步驟與行動）顯著提升前瞻性記憶表現，尤其在 ADHD 群體中改善更為顯著；而結果導向思考（僅幻想目標達成的狀態）則效果有限，甚至在某些情況下增加認知負擔。此發現支持將目標設定導向具體行動規劃，而非僅停留在結果幻想，對執行功能有障礙的個人尤為重要。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">有與無 ADHD 的成年人</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">情境導向或結果導向的情景未來思考誘導</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">中性思考或無思考誘導對照組</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">情境導向思考顯著改善前瞻性記憶表現，尤其在 ADHD 群體中；結果導向思考效果較弱</span></div></div>
+          <div class="card-footer">
+            <span class="tag">情景未來思考</span><span class="tag">ADHD</span><span class="tag">前瞻性記憶</span><span class="tag">執行功能</span><span class="tag">目標導向</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42475007/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#5</span>
+            <span class="emoji-icon">📊</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>情景未來思考干預對心血管健康行為影響的元分析</h3>
+          <p class="journal-source">International journal of nursing studies &middot; The effects of episodic future thinking interventions on cardiovascular health behaviors: A meta-analysis</p>
+          <p>此元分析整合多項實證研究，評估情景未來思考（episodic future thinking，EFT）干預對改善心血管健康行為（如飲食、運動、藥物依從性）的整體效果。結果顯示，EFT 干預在促進健康行為方面具有中等且顯著的正向效應（d = 0.41），尤其在結合具體行動規劃時效果更佳。分析進一步發現，效應在隨訪期間略有衰減，但仍具臨床意義。研究支持 EFT 作為一種具有實用價值的行為改變工具，特別適用於預防心血管疾病的生活方式干預中。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">具有或風險發展心血管疾病的成年人</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">情景未來思考干預（引導具體想象未來健康情境）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">對照組（無干預、放鬆或中性任務）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">心血管健康行為顯著改善（效應大小 d = 0.41）</span></div></div>
+          <div class="card-footer">
+            <span class="tag">情景未來思考</span><span class="tag">元分析</span><span class="tag">心血管健康</span><span class="tag">行為改變</span><span class="tag">預防醫學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42341710/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📘</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>透過數位通訊促進母乳餵養：一項縱向隨機對照試驗</h3>
+          <p class="journal-source">Health psychology and behavioral medicine</p>
+          <p>此縱向隨機對照試驗探討數位通訊工具（如訊息提醒、教育影片）在產後期間對促進母乳餵養持續性與獨立母乳餵養率的影響。結果顯示，接受數位干預的母親在產後數週及數月時，母乳餵養的開始率與持續期間均顯著高於對照組，顯示低成本、易擴展的數位介入在產後支持中的潛力。</p>
+          <div class="card-footer">
+            <span class="tag">母乳餵養</span><span class="tag">數位干預</span><span class="tag">縱向研究</span><span class="tag">隨機對照試驗</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42494808/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧠</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>線上理論基礎干預對醫護人員提供健康行為改變服務接受度的質性研究</h3>
+          <p class="journal-source">British journal of health psychology</p>
+          <p>此質性研究探討醫護人員對一種線上、理論基礎（如社會認知理論、自我決定理論）介入的接受度，該介入旨在支持其在臨床實務中提供健康行為改變諮詢（如戒菸、增加運動）。訪談結果顯示，參與者重視該課程的實用性與彈性，但指出時間限制與工作流程整合是主要障礙。研究強調，未來設計需更貼近臨床工作流程，並提供持續督導以提升長期實施可能性。</p>
+          <div class="card-footer">
+            <span class="tag">醫護人員培訓</span><span class="tag">健康行為改變</span><span class="tag">線上介入</span><span class="tag">質性研究</span><span class="tag">理論基礎</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42411014/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📉</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>改善早期檢測與診斷以提升乳癌成果：高收入國家全民醫療體系的傘式評論與元分析</h3>
+          <p class="journal-source">Cancer control : journal of the Moffitt Cancer Center</p>
+          <p>此傘式評論與元分析檢視了在具備全民醫療覆蓋的高收入國家中，透過加強早期檢測與診斷活動（如大篩檢、醫師教育、檢查流程優化）對乳癌預後的影響。結果顯示，多組合策略顯著提升早期診斷率並降低晚期發病率，進而改善生存率。研究強調系統層面介入的重要性，而非僅依賴個人行為改變。</p>
+          <div class="card-footer">
+            <span class="tag">乳癌</span><span class="tag">早期檢測</span><span class="tag">元分析</span><span class="tag">全民醫療</span><span class="tag">公共衛生</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42400473/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">⏳</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>時間在心中：時間感知、認知與記憶的多學科評論</h3>
+          <p class="journal-source">Frontiers in cognition</p>
+          <p>此多學科評論整合心理學、神經科學與哲學視角，探討人類如何主觀體驗時間、時間感知如何影響決策與記憶，以及不同年齡層與認知狀態下時間經驗的差異。討論涉及時間擴張與壓縮的神經機制、注意力在時間估計中的角色，以及時間意識與幸福感的關聯。文章指出，對時間的主觀體驗不僅影響過去的回憶，也塑造未來的預期與目標設定行為。</p>
+          <div class="card-footer">
+            <span class="tag">時間感知</span><span class="tag">認知</span><span class="tag">記憶</span><span class="tag">多學科</span><span class="tag">主觀時間</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42339238%7D%2C%20%7B/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">👶</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>讓我們自發一點：年長但不是年輕的學前兒童能獨立為未來問題做準備</h3>
+          <p class="journal-source">Cognition</p>
+          <p>此研究探討不同年齡學前兒童在未來導向行為上的差異。結果顯示，只有較年長的學前兒童（約5歲以上）能在未受成人提示的情況下，自發地為未來可能的問題（如準備工具以應對預見需求）做準備；而年輕兒童（3-4歲）則多依賴即時線索。此發現支持所謂『未來時間視野』的發展在學前期逐步成熟，與執行功能的發展密切相關，為理解兒童如何開始具備目標導向行為提供了實證基礎。</p>
+          <div class="card-footer">
+            <span class="tag">兒童發展</span><span class="tag">未來導向行為</span><span class="tag">執行功能</span><span class="tag">自發規劃</span><span class="tag">學前教育</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42161009%7D%2C%20%7B/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📉</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>正向與負向未來思考流暢度：關聯心理病態與絕望感的橫診斷元分析</h3>
+          <p class="journal-source">Journal of affective disorders</p>
+          <p>此橫診斷元分析檢視個人在想像正向與負向未來事件時的流暢度（fluency）如何與各種心理病態症狀（如抑鬱、焦慮）及絕望感相關。結果顯示，負向未來思考流暢度升高與更高抑鬱症狀、焦慮與絕望感顯著相關；而正向未來思考流暢度則與較低絕望感及較佳適應性相關，但關聯強度較弱。研究指出，未來思考的內容與流暢度可能作為心理風險或韌性的早期指標，尤其在評估自殺風險時具臨床參考價值。</p>
+          <div class="card-footer">
+            <span class="tag">未來思考</span><span class="tag">心理病態</span><span class="tag">絕望感</span><span class="tag">元分析</span><span class="tag">橫診斷</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42140319%7D%2C%20%7B/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📘</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>生活方式改善的行為修正</h3>
+          <p class="journal-source"></p>
+          <p>此文獻為一本關於行為修正原則與應用的書籍章節或實務指南，討論如何透過強化、塑造、自我監控等行為技巧來促進健康生活方式的改變（如飲食、運動、壓力管理）。雖未提供實證研究數據，但闡述了行為主導理論在生活方式介入中的應用框架，適合作為理論參考或教育資源使用。</p>
+          <div class="card-footer">
+            <span class="tag">行為修正</span><span class="tag">生活方式</span><span class="tag">理論指南</span><span class="tag">健康促進</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/37276296/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">心理對比與實施意圖</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">情景未來思考</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">目標設定與追求</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:75%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">未來思考與心理健康</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:75%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">行為改變與健康促進</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:75%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">兒童與發展心理</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:50%"></div></div>
+          <span class="topic-count">2</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">數位健康干預</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:50%"></div></div>
+          <span class="topic-count">2</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">執行功能與注意力</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:50%"></div></div>
+          <span class="topic-count">2</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">心理對比</span><span class="keyword">實施意圖</span><span class="keyword">情景未來思考</span><span class="keyword">目標設定</span><span class="keyword">行為改變</span><span class="keyword">幸福感</span><span class="keyword">前瞻性記憶</span><span class="keyword">執行功能</span><span class="keyword">ADHD</span><span class="keyword">自我效能</span><span class="keyword">樂觀</span><span class="keyword">動機調節</span><span class="keyword">健康促進</span><span class="keyword">數位干預</span><span class="keyword">母乳餵養</span><span class="keyword">乳癌篩檢</span><span class="keyword">兒童發展</span><span class="keyword">時間感知</span><span class="keyword">絕望感</span><span class="keyword">元分析</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
