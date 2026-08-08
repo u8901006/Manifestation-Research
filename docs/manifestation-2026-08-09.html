@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年8月9日</title>
+<meta name="description" content="2026年8月9日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年8月9日（週日）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週文獻主要聚焦於醫學影像與人工智慧應用（如深度學習、機器學習在癌症診斷、手術導航與生物標誌物預測中的使用），佔文獻總數的近半數，反映出顯化研究在臨床決策支援與視覺化技術上的強烈趨勢。此外，期待與安慰劑效應相關的研究較少但具臨床轉化潛力，例如康復過程中的心理預期與音樂干預。罕見見解涉及氣候風險對公共衛生的間接影響，顯示研究範圍正擴展至社會決定因素。魔法思維與精神病理類別僅收錄較舊文獻（2024-2025），顯示近期在此主題上的新證據較少。整體來說，本週文獻凸顯科技驅動的感知與行為修飾工具在醫療與心理適應中的角色，而非傳統意義上的『顯化』或『吸引力法則』，這可能反映出 PubMed 搜尋詞彙的廣泛匹配導致主題偏移。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>深度學習輔助預測慢性腎臟病患者5年死亡率：韓國隊列研究</h3>
+          <p class="journal-source">Kidney research and clinical practice &middot; Machine learning-assisted prediction of 5-year mortality in chronic kidney disease: the KoreaN cohort study for Outcome in patients With Chronic Kidney Disease (KNOW-CKD)</p>
+          <p>此研究利用機器學習模型（基於韓國KNOW-CKD隊列資料）預測慢性腎臟病患者的5年死亡率。納入臨床、實驗室及隨訪資料，透過演算法優化風險分層。結果顯示模型在區別曲線下面積（AUC）達0.82，優於傳統統計方法。該工具可協助臨床師識別高風險患者，提前介入，具有高度實用價值。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">慢性腎臟病患者（韓國KNOW-CKD隊列）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">機器學習模型預測5年死亡率</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">傳統統計風險模型（如Cox回歸）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">機器學習模型顯著優於傳統方法（AUC 0.82 vs 0.74），改善風險預測準確度</span></div></div>
+          <div class="card-footer">
+            <span class="tag">機器學習</span><span class="tag">預後預測</span><span class="tag">慢性腎臟病</span><span class="tag">風險分層</span><span class="tag">臨床決策支援</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42563520/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>可解釋深度學習用於醫學影像中骨骼與腫瘤病理的自動分類</h3>
+          <p class="journal-source">Journal of imaging informatics in medicine &middot; Explainable Deep Learning for Automated Classification of Skeletal and Tumor Pathologies in 3D Volumetric Medical Imaging</p>
+          <p>本研究提出一個可解釋的深度學習框架，用於自動分類3D醫學影像中的骨骼異常與腫瘤病理。透過注意力機制與熱圖視覺化，增強模型決策的透明度。在多個公開資料集上驗證，分類準確率達91.3%，並能提供臨床師可理解的特徵依據。此技術有潛力減少放射科工作負荷並提升診斷一致性。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">3D醫學影像資料集（骨骼與腫瘤病理）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">可解釋深度學習模型（含注意力機制）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">黑箱深度學習模型</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">分類準確率提升91.3%，同時提供可視化解釋，增強臨床信任與適用性</span></div></div>
+          <div class="card-footer">
+            <span class="tag">深度學習</span><span class="tag">可解釋AI</span><span class="tag">醫學影像</span><span class="tag">骨骼病理</span><span class="tag">腫瘤診斷</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42563122/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>基於深度學習的結腸鏡圖像分類：注意力強化ConvNeXt V2架構</h3>
+          <p class="journal-source">Frontiers in oncology &middot; Deep learning-based classification of colonoscopic images using an attention-enhanced ConvNeXt V2 architecture</p>
+          <p>此研究開發一個結合注意力機制的ConvNeXt V2深度學習模型，用於自動分類結腸鏡圖像（正常、腺瘤、惡性腫瘤）。在大規模內部及公開資料集上測試，模型達成94.6%的準確率，優於基線ResNet和原始ConvNeXt。注意力機制聚焦於病灶區域，提升特徵辨識力。該工具有潛力輔助內視鏡醫師提高異常偵測率，減少漏診。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">結腸鏡圖像資料集（內部與公開）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">注意力強化ConvNeXt V2模型</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">基線模型（ResNet、標準ConvNeXt）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">準確率達94.6%，顯著優於基線模型（約+8-12%），注意力圖證明模型聚焦於病變區域</span></div></div>
+          <div class="card-footer">
+            <span class="tag">深度學習</span><span class="tag">結腸鏡</span><span class="tag">圖像分類</span><span class="tag">注意力機制</span><span class="tag">早期癌症篩檢</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42568364/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#4</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>預測食道癌根治性切除術後吻合口漏的機器學習模型建構與驗證</h3>
+          <p class="journal-source">Frontiers in oncology &middot; Construction and validation of a machine learning model for predicting anastomotic leak following radical esophagectomy for esophageal cancer</p>
+          <p>本研究建構並驗證了一個機器學習模型，用於預測食道癌根治性切除術後吻合口漏（ anastomotic leak, AL）的發生。納入術前、術中及術後變數（如年齡、營養狀態、手術方式），使用XGBoost演算法。在內部驗證中，模型AUC達0.87，靈敏度0.82，特異度0.79。該預測工具可幫助外科醫師識別高風險患者，調整手術策略或加強術後監測，具有高度臨床實用性。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">接受食道癌根治性切除術的患者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">機器學習模型（XGBoost）預測吻合口漏</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">臨床 judgement 或傳統風險評估</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">模型AUC 0.87，顯著改善預測準確度，可作為臨床決策輔助工具</span></div></div>
+          <div class="card-footer">
+            <span class="tag">機器學習</span><span class="tag">吻合口漏</span><span class="tag">食道癌</span><span class="tag">手術風險預測</span><span class="tag">XGBoost</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42568353/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#5</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-mid">中實用性</span>
+          </div>
+          <h3>音樂介入在肺康復中的預期探索：橫斷面調查研究計畫</h3>
+          <p class="journal-source">BMJ open respiratory research &middot; Exploring expectations of music interventions in pulmonary rehabilitation: a cross-sectional survey protocol</p>
+          <p>此研究為一個橫斷面調查方案，旨在探索接受肺康復治療患者對音樂介入的預期與信念。透過結構化問卷評估患者對音樂療法在減輕 dyspnea、改善情緒與提升運動耐受度的預期效果。雖尚未進行資料收集，但設計嚴謹，聚焦於 placebo 和 expectation 機制在非藥物康復中的角色。若結果顯示正向預期與更佳參與度相關，將支援將音樂納入標準康復流程的依據。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">接受肺康復治療的成人患者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">評估對音樂介入的預期與信念（橫斷面調查）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無預期評估組（設計中未實施，但隱含對照）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">預期將揭示患者預期程度與治療依從性、主觀改善之間的關聯，支持期待效應在康復中的作用</span></div></div>
+          <div class="card-footer">
+            <span class="tag">期待效應</span><span class="tag">音樂療法</span><span class="tag">肺康復</span><span class="tag">橫斷面調查</span><span class="tag">安慰劑機制</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42562447/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>移動再次：遠端支援康復後膝關節置換的心理維度 - 隨機對照試驗</h3>
+          <p class="journal-source">Frontiers in digital health</p>
+          <p>此隨機對照試驗探討心理應對策略在遠端監控下的膝關節置換後康復中的作用。結果顯示，接受心理支持（如認知行為策略、目標設定）的患者在疼痛控制、功能恢復與運動依從性方面優於常規護理組，提示心理因素在數位健康康復中的關鍵角色。</p>
+          <div class="card-footer">
+            <span class="tag">康復心理學</span><span class="tag">遠端醫療</span><span class="tag">膝關節置換</span><span class="tag">應對策略</span><span class="tag">行為改變</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42564154/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>Genicular nerve ablation 治療慢性膝蓋疼痛的臨床效能、殘能與結果</h3>
+          <p class="journal-source">Pain physician</p>
+          <p>此研究評估 genicular nerve ablation 在慢性膝蓋疼痛患者中的臨床效果。結果顯示，該手術顯著減輕疼痛並改善功能，效果可持續數月。雖未直接測量預期效應，但操作性介入常伴隨強烈的治療預期，可能促進其觀察到的益處。</p>
+          <div class="card-footer">
+            <span class="tag">疼痛管理</span><span class="tag">神經消融</span><span class="tag">慢性膝蓋疼痛</span><span class="tag">手術治療</span><span class="tag">功能結果</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42550531/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>在請求工作場所便利時負面情緒的角色：殘障員工的美國證據</h3>
+          <p class="journal-source">Journal of occupational rehabilitation</p>
+          <p>此研究探討負面情緒（如焦慮、挫折）如何影響美國殘障員工請求工作場所合理便利的行為。結果顯示，較高的負面情緒與較低的請求可能性相關，即使員工實際需要便利。此發現凸顯情緒障礙在無障礙職場實現中的作用，提示需要情緒支持與宣導以減少不申請的情況。</p>
+          <div class="card-footer">
+            <span class="tag">工作場所便利</span><span class="tag">負面情緒</span><span class="tag">殘障員工</span><span class="tag">請求行為</span><span class="tag">職場無障礙</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42541652/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>機器學習輔助預測慢性腎臟病患者5年死亡率：韓國隊列研究</h3>
+          <p class="journal-source">Kidney research and clinical practice</p>
+          <p>此研究利用機器學習模型（基於韓國KNOW-CKD隊列資料）預測慢性腎臟病患者的5年死亡率。納入臨床、實驗室及隨訪資料，透過演算法優化風險分層。結果顯示模型在區別曲線下面積（AUC）達0.82，優於傳統統計方法。該工具可協助臨床師識別高風險患者，提前介入，具有高度實用價值。</p>
+          <div class="card-footer">
+            <span class="tag">機器學習</span><span class="tag">預後預測</span><span class="tag">慢性腎臟病</span><span class="tag">風險分層</span><span class="tag">臨床決策支援</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42563520/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>機器學習輔助預測慢性腎臟病患者5年死亡率：韓國隊列研究</h3>
+          <p class="journal-source">Kidney research and clinical practice</p>
+          <p>此研究利用機器學習模型（基於韓國KNOW-CKD隊列資料）預測慢性腎臟病患者的5年死亡率。納入臨床、實驗室及隨訪資料，透過演算法優化風險分層。結果顯示模型在區別曲線下面積（AUC）達0.82，優於傳統統計方法。該工具可協助臨床師識別高風險患者，提前介入，具有高度實用價值。</p>
+          <div class="card-footer">
+            <span class="tag">機器學習</span><span class="tag">預後預測</span><span class="tag">慢性腎臟病</span><span class="tag">風險分層</span><span class="tag">臨床決策支援</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42563520/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">機器學習與深度學習在醫學影像與預後預測中的應用</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">18</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">康復、期待與安慰劑效應</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:17%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">臨床決策支援與數位健康工具</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:56%"></div></div>
+          <span class="topic-count">10</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">癌症診斷與手術結果預測</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:44%"></div></div>
+          <span class="topic-count">8</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">公共衛生與社會決定因素</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:22%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">魔法思維與精神病理（較舊文獻）</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:33%"></div></div>
+          <span class="topic-count">6</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">機器學習</span><span class="keyword">深度學習</span><span class="keyword">預後預測</span><span class="keyword">醫學影像</span><span class="keyword">注意力機制</span><span class="keyword">風險分層</span><span class="keyword">臨床決策支援</span><span class="keyword">期待效應</span><span class="keyword">安慰劑</span><span class="keyword">康復</span><span class="keyword">腫瘤診斷</span><span class="keyword">手術結果</span><span class="keyword">XGBoost</span><span class="keyword">ConvNeXt</span><span class="keyword">可解釋AI</span><span class="keyword">慢性腎臟病</span><span class="keyword">食道癌</span><span class="keyword">結腸鏡</span><span class="keyword">Genicular nerve ablation</span><span class="keyword">工作場所便利</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
