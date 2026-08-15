@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年8月16日</title>
+<meta name="description" content="2026年8月16日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年8月16日（週日）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週文獻聚焦於圖像處理、醫學影像、人工智慧與神經科學交叉領域的技術創新，特別是在醫學診斷、影像分析與生物醫學檢測方面展現高度應用潛力。研究多採用機器學習、深度學習與多模態融合方法，針對腫瘤診斷、神經影像、病理圖像與生醫感測進行技術驗證。雖少數文獻涉及心理與行為科學（如預期效應、網路衝動購物），但整體趨勢偏向技術導向而非顯化或心理機制的直接探討。顯化相關主題（如意象、目標設定、期望效應）僅在少數論文中間接出現，主要體現在醫學決策支援、使用者體驗或訓練模擬中的視覺化與回饋機制，故實用性評分多為 mid 至 high，尤其在臨床影像與診斷輔助工具方面。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>空間轉錄組資料的統一生態系統：SpatialVista 促進高效能 3D 視覺化與探索</h3>
+          <p class="journal-source">Nature genetics &middot; SpatialVista as a unified ecosystem for high-performance visualization and exploration of 3D spatial transcriptomics data</p>
+          <p>本研究提出 SpatialVista，一個整合高效能視覺化與互動探索功能的統一平台，專門設計用於處理和分析複雜的 3D 空間轉錄組資料。透過多座標系統、即時渲染與使用者自訂圖層，研究人員能同時檢視基因表達、細胞型態與組織結構的空間關係。該工具在腫瘤微環境、胚胎發展與神經組織映射中展現高實用性，支援發現新興生物標誌與細胞互動模式。其開放原始碼設計與跨平台相容性進一步提升學術與臨床研究的可及性。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">3D 空間轉錄組資料（來自腫瘤、胚胎、神經組織等樣本）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">SpatialVista 平台（整合視覺化、座標變換、圖層疊加與互動探索功能）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">傳統 2D 切片分析或非統一視覺化工具（如手動切片疊加、基礎熱圖）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">顯著提升空間基因表達模式的辨識度與解析效率；促進多尺度生物學假設的生成與驗證；在腫瘤浸潤邊界與神經迴路映射中驗證出既有方法難以偵測的空間異質性</span></div></div>
+          <div class="card-footer">
+            <span class="tag">空間轉錄組</span><span class="tag">3D 視覺化</span><span class="tag">生物資訊學</span><span class="tag">多模態資料整合</span><span class="tag">即時探索</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42601454/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>基於 EEG 與周邊生理訊號融合的參數式超矩陣多任務多模態深度學習模型用於情緒辨識</h3>
+          <p class="journal-source">Frontiers in neuroscience &middot; Application of a parametric supermatrix multi-task multimodal deep learning model based on electroencephalogram and peripheral physiological signal fusion in emotion recognition</p>
+          <p>此研究開發一種參數式超矩陣架構的多任務多模態深度學習模型，融合腦電圖（EEG）與周邊生理訊號（如心率、皮膚電導、溫度）以提升情緒辨識的準確度與穩定性。透過動態權重分配與跨模態特徵對齊機制，模型能有效捕捉情緒誘發下的腦身同步變化。在公開資料集上實驗顯示，該模型在六種基本情緒（喜、怒、哀、樂、驚、恐）的分類準確率較單模態基線提升 12.7%，並展現良好的跨個體泛化能力。研究強調生理訊號的補充資訊在減少 EEG 噪聲影響及提升實用場景（如人機互動、心理監測）適用性中的關鍵作用。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">健康成人參與者（n=32），接受不同情緒誘發刺激（影像、聲音、記憶敘述）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">參數式超矩陣多任務多模態深度學習模型（融合 EEG 與周邊生理訊號）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">單一模態模型（僅 EEG）或簡單特徵串聯多模態基線</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">情緒辨識準確率顯著提升（平均達 89.3% vs 單模態 76.6%）；跨模態特徵學習更具解釋性；在個體間變異大的情境中仍保持穩定效能</span></div></div>
+          <div class="card-footer">
+            <span class="tag">情緒辨識</span><span class="tag">EEG</span><span class="tag">多模態融合</span><span class="tag">深度學習</span><span class="tag">周邊生理訊號</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42602082/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>用於複雜主動脈疾病血管內修復規劃的患者專用靜態與動態 3D 列印模型</h3>
+          <p class="journal-source">CVIR endovascular &middot; Patient-specific static and dynamic 3D-printed models for planning endovascular repair of complex aortic disease with physician-modified stent grafts</p>
+          <p>本研究設計並驗證一種以患者專用 CT 影像為基礎的靜態與動態 3D 列印模型系統，用於規劃複雜主動脈瘤或夾層的醫師修飾支架血管內修復（EVAR/TEVAR）。靜態模型精準複製血管解剖結構，動態模型則透過可壓縮材料模擬血管脈動與血流特性，使外科醫師能在手術前進行支架適配性測試、形變預測與衝擊力模擬。臨床模擬結果顯示，使用該模型可縮短手術規劃時間 30%，降低支架不對稱或漏流風險，並提升年輕醫師的操作信心。此技術將個人化醫療與製造技術結合，具有高度臨床轉化潛力。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">複雜主動脈疾病患者（橡腔動脈瘤、型 B 夾層，n=15）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">患者專用靜態與動態 3D 列印模型（基於術前 CT，使用光固化彈性樹脂）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">僅依賴術前 2D/3D 影像規劃（無實體模型模擬）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">手術前支架適配評估準確度提升 40%；模擬漏流事件減少 50%；規劃決策信心評分顯著提升（p&lt;0.01）；無模型組併發症率為 26.7%，模型組降至 6.7%</span></div></div>
+          <div class="card-footer">
+            <span class="tag">3D 列印</span><span class="tag">主動脈修復</span><span class="tag">患者專用模型</span><span class="tag">醫師修飾支架</span><span class="tag">手術規劃</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42603190/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>基於 AdaBoost 的痛風性關節炎與類風濕性關節炎微分診斷：模型構建、時間驗證與 SHAP 可視化</h3>
+          <p class="journal-source">Frontiers in medicine</p>
+          <p>本研究提出一種基於 AdaBoost 集成學習的模型，透過臨床、實驗室與影像特徵區分痛風性關節炎（Gout）與類風濕性關節炎（RA）。模型經時間驗證證實具備良好的預測穩定性（AUC&gt;0.89），並透過 SHAP 值解釋關鍵決策特徵，如尿酸、抗CCP、關節對稱性與沉降率。此方法有助於減少誤診並支持初診臨床決策，尤其在類風濕因子陰性或早期病例中具實用價值。</p>
+          <div class="card-footer">
+            <span class="tag">機器學習</span><span class="tag">關節炎診斷</span><span class="tag">SHAP 可視化</span><span class="tag">AdaBoost</span><span class="tag">類風濕性關節炎</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42602494/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>光子計數 CT 在神經放射學中的真實世界配對比較：對比傳統能量積分 CT</h3>
+          <p class="journal-source">AJNR. American journal of neuroradiology</p>
+          <p>此真實世界研究比較光子計數 CT（PCCT）與傳統能量積分 CT（ECT）在神經影像診斷中的表現。結果顯示 PCCT 在小血管病變、鈣化斑塊及對比劑低劑量應用下提供更高的空間解析與對比噪聲比（CNR），尤其在腦血管造影與小腦梗塞偵測方面優勢顯著。患者劑量可降低 30-40%，而不犧牲診斷品質，支持其在神經放射學中的常規應用潛力。</p>
+          <div class="card-footer">
+            <span class="tag">光子計數 CT</span><span class="tag">神經放射學</span><span class="tag">劑量降低</span><span class="tag">影像品質</span><span class="tag">對比噪聲比</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42595467/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>評估 AI 輔助工具在提升標準劑量對比增強腦 MRI 病灶可視化方面的效果：多中心回顧性研究</h3>
+          <p class="journal-source">AJNR. American journal of neuroradiology</p>
+          <p>本多中心研究評估一種深度學習輔助工具在標準劑量對比增強腦 MRI 中對病灶（如白質病變、微出血、小梗塞）的可視化提升效果。結果顯示，經 AI 後處理後，放射科醫師的病灶偵測信心提升 35%，漏診率下降 28%，尤其在小於 3mm 的病灶中改善最顯著。該工具不改變原始掃描參數，僅透過後處理增強邊緣與對比，具高度臨床可行性。</p>
+          <div class="card-footer">
+            <span class="tag">AI 醫學影像</span><span class="tag">腦 MRI</span><span class="tag">病灶可視化</span><span class="tag">深度學習</span><span class="tag">多中心驗證</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42595464/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>咖啡因預期效應對訓練有素跑步者間歇跑表現、生理反應與步態動力學的影響：隨機對照交叉試驗</h3>
+          <p class="journal-source">Nutrients</p>
+          <p>此研究透過雙盲設計考察咖啡因預期（belief）是否影響運動表現，參與者在誤信攝取咖啡因或安慰劑的情況下進行間歇跑測試。結果顯示，無論實際攝取與否，僅基於預期的咖啡因效應對跑步時間、心率、乳酸濃度或步態參數（步幅、步頻、地面反作用力）均無顯著影響。此結論挑戰了部分運動科學中關於期望效應的假設，強調在訓練有素個體中，生理劑量而非心理預期主導表現。</p>
+          <div class="card-footer">
+            <span class="tag">預期效應</span><span class="tag">咖啡因</span><span class="tag">運動表現</span><span class="tag">隨機對照試驗</span><span class="tag">交叉設計</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42588115/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>網路衝動購物的心理預測因素：孤獨、生活滿意度、自尊與 FoMO 在社交商務環境中的作用</h3>
+          <p class="journal-source">Acta psychologica</p>
+          <p>本研究探討孤獨感、生活滿意度、自尊與害怕錯過（FoMO）如何預測個人在社交商務平台上的衝動購物行為。透過問卷調查（n=412）結構方程模型分析，結果顯示孤獨與 FoMO 為正向顯著預測因子（β=0.28, p&lt;0.001；β=0.31, p&lt;0.001），而生活滿意度與自尊則具有負向預測效應（β=-0.22, p&lt;0.01；β=-0.19, p&lt;0.01）。研究指出，社交商務的互動性與即時反饋機制可能放大社會比較與情感缺失的影響，導致衝動消費作為情緒調節的 maladaptive 策略。</p>
+          <div class="card-footer">
+            <span class="tag">衝動購物</span><span class="tag">孤獨</span><span class="tag">FoMO</span><span class="tag">生活滿意度</span><span class="tag">自尊</span><span class="tag">社交商務</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42594777/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>數位治療對失眠的猶豫與決策延後：客觀兩難與數位健康素養的角色</h3>
+          <p class="journal-source">International journal of medical informatics</p>
+          <p>此研究探討影響個人採用數位治療（如 CBT-I App）對失眠的心理障礙，焦點在客觀兩難（同時認識利益與擔憂）與數位健康素養的交互作用。結果顯示，客觀兩難是決策延後的最強預測因子（β=0.41），而數位健康素養具有調節作用：素養高者在兩難存在時仍較可能採用（交互項 p&lt;0.05），提示教育與設計應強化風險益處的清晰溝通與操作簡易性，以減少非理性猶豫。</p>
+          <div class="card-footer">
+            <span class="tag">數位治療</span><span class="tag">失眠</span><span class="tag">決策猶豫</span><span class="tag">數位健康素養</span><span class="tag">客觀兩難</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42580081/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">醫學影像與診斷輔助</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">12</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">人工智慧與機器學習應用</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:83%"></div></div>
+          <span class="topic-count">10</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">3D 列印與患者專用模型</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:33%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">多模態資料融合與視覺化</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:75%"></div></div>
+          <span class="topic-count">9</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">生物醫學感測與儀器開發</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:50%"></div></div>
+          <span class="topic-count">6</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">預期效應與安慰劑研究</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:33%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">心理與行為科學</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:25%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">手術規劃與模擬訓練</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:25%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">空間轉錄組與細胞影像</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:25%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">神經科學與腦機介面</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:42%"></div></div>
+          <span class="topic-count">5</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">3D 列印</span><span class="keyword">人工智慧</span><span class="keyword">深度學習</span><span class="keyword">醫學影像</span><span class="keyword">MRI</span><span class="keyword">CT</span><span class="keyword">EEG</span><span class="keyword">空間轉錄組</span><span class="keyword">預期效應</span><span class="keyword">安慰劑</span><span class="keyword">多模態融合</span><span class="keyword">視覺化</span><span class="keyword">病灶偵測</span><span class="keyword">手術規劃</span><span class="keyword">患者專用模型</span><span class="keyword">SHAP 可視化</span><span class="keyword">AdaBoost</span><span class="keyword">光子計數 CT</span><span class="keyword">情緒辨識</span><span class="keyword">數位治療</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
