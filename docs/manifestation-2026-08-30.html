@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年8月30日</title>
+<meta name="description" content="2026年8月30日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年8月30日（週日）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週文獻聚焦於顯化研究的多個面向，其中以神經影像、視覺化技術與人工智慧應用最為活躍，特別是在腦機介面、醫學影像與細胞成像領域。Expectancy &amp; Placebo 類研究顯示出對安慰劑機制的深入探討，特別是前額葉經顱直流電刺激對開放標籤安慰劑反應的調節作用。Positive Fantasies &amp; Mental Contrasting 類僅有一篇，探討目標設定與飲食依附性的關係。Magical Thinking &amp; Psychopathology 類則為較早期文獻，討論強迫症中的思維-行動融合。整體趨勢顯示，顯化研究正從傳統心理層面轉向具體化的神經生理與技術測量方法，特別是在視覺化、意象與目標導向行為的客觀化評估上取得進展。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>前額葉經顱直流電刺激對開放標籤安慰劑反應的影響</h3>
+          <p class="journal-source">Neuropsychopharmacology &middot; Effects of prefrontal transcranial direct current stimulation on open-label placebo responses</p>
+          <p>此研究透過隨機對照試驗探討前額葉經顱直流電刺激（tDCS）是否能調節開放標籤安慰劑（open-label placebo, OLP）對疼痛與不適的緩解效應。結果顯示，主動tDCS組相比假性刺激組在OLP條件下顯著增強了症狀改善，提示前額葉在安慰劑反應中具備因果調節角色。此發現支援預測處理理論，即大腦透過先驗信念（如治療期待）主動塑造知覺體驗。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">健康成人志願者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">主動前額葉經顱直流電刺激 (tDCS)</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">假性tDCS</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">主動tDCS組在開放標籤安慰劑條件下顯著增強疼痛與不適的主觀緩解效應（p &lt; 0.05）</span></div></div>
+          <div class="card-footer">
+            <span class="tag">Expectancy &amp; Placebo</span><span class="tag">tDCS</span><span class="tag">open-label placebo</span><span class="tag">prefrontal cortex</span><span class="tag">predictive processing</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42649240/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">📄</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>結構化視覺化訓練對腹腔鏡技能學習的影響：隨機對照研究</h3>
+          <p class="journal-source">Journal of surgical education &middot; Structured Visualization for Laparoscopic Skill Acquisition: A Randomized Controlled Study</p>
+          <p>本研究探討結構化心智意象訓練是否能提升外科住院醫師的腹腔鏡手術技能。參與者被隨機分配至接受結構化視覺化訓練組或對照組，訓練內容包含標準化的手術步驟意象練習。結果顯示，接受結構化視覺化訓練組在手術完成時間、錯誤次數及教師評分上均顯著優於對照組，提示有意象引導的認知排練能有效補強肌肉記憶與程序學習。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">外科住院醫師</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">結構化視覺化訓練（標準化心智意象練習）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無額外視覺化訓練（對照組）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">視覺化組在手術效率（縮短完成時間）、精準度（減少錯誤）及主觀自信上皆顯著優於對照組（p &lt; 0.01）</span></div></div>
+          <div class="card-footer">
+            <span class="tag">Imagery &amp; Goal Pursuit</span><span class="tag">surgical training</span><span class="tag">mental imagery</span><span class="tag">laparoscopy</span><span class="tag">randomized controlled trial</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42664722/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🎯</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>目標優先排序與實施意圖對地中海飲食依附性的促進效應：隨機對照試驗</h3>
+          <p class="journal-source">Appetite &middot; Can combined goal prioritization and implementation intentions promote adherence to the Mediterranean Diet? A randomized controlled trial</p>
+          <p>此研究測試結合目標優先排序（goal prioritization）與實施意圖（implementation intentions, IIs）是否能提升成年人對地中海飲食的長期依附性。參與者接受數週的多成分行為介入，包含目標澄清、衝突解決與情境-specific 行動計畫（例如：&#039;如果我在餐廳，我就會選擇烤魚而非炸物&#039;）。結果顯示，介入組在飲食依附性、營養攝取質量及自我效能方面均顯著優於對照組，效果在3個月隨訪後仍持續。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">希望改善飲食習慣的成年人</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">目標優先排序 + 實施意圖訓練</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">一般健康教育對照組</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">介入組在地中海飲食依附性評分上顯著高於對照組（平均差異：+2.1分，p &lt; 0.001），並伴隨蔬果攝取增加與紅肉攝取減少</span></div></div>
+          <div class="card-footer">
+            <span class="tag">Positive Fantasies &amp; Mental Contrasting</span><span class="tag">goal prioritization</span><span class="tag">implementation intentions</span><span class="tag">Mediterranean Diet</span><span class="tag">behavioral intervention</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42660389/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧠</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>安慰劑機制在精神病學研究中的系統性評論與meta分析</h3>
+          <p class="journal-source">The British journal of psychiatry</p>
+          <p>此meta分析整合了多項使用西酞普蘭或艾斯西酞普蘭作為對照藥物的精神病學隨機對照試驗，評估安慰劑反應在抑鬱、焦慮等疾病中的一致性與變異來源。結果顯示，安慰劑組的改善幅度顯著且具備預測性，提示期待與條件反射在精神療法中佔據重要比例。</p>
+          <div class="card-footer">
+            <span class="tag">Expectancy &amp; Placebo</span><span class="tag">meta-analysis</span><span class="tag">placebo response</span><span class="tag">antidepressants</span><span class="tag">psychiatry</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42639721/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧠</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>認知訓練在輕度認知障礙中的效應：依淀粉樣蛋白病理分層分析</h3>
+          <p class="journal-source">Dementia &amp; neuropsychologia</p>
+          <p>本研究探討認知訓練對輕度認知障礙（MCI）患者的影響，並依是否伴隨阿茲海默症相關的淀粉樣蛋白病理進行分層分析。結果顯示，在無明顯淀粉樣蛋白積聚的MCI患者中，認知訓練顯著改善記憶與執行功能；而在陽性病理組中，則效果顯著減弱，提示神經退化程度可能限制可塑性潛力。</p>
+          <div class="card-footer">
+            <span class="tag">Imagery &amp; Goal Pursuit</span><span class="tag">cognitive training</span><span class="tag">MCI</span><span class="tag">amyloid pathology</span><span class="tag">neuroplasticity</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42657170/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🔬</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>利用原子力顯微鏡就位視覺化鋅陽極在Cr修飾下的介面演化</h3>
+          <p class="journal-source">Chemical science</p>
+          <p>此研究開發了一種就位原子力顯微鏡技術，能夠在電池充放電過程中實時觀察鋅陽極表面的形態與結構變化，特別是鉻修飾如何抑制樹狀結晶生長並促進均勻鋁沉積。這種直接視覺化方法為理解金屬陽極退化機制提供了前所未有的時空解析度，有助於設計更安全、壽命更長的金屬電池。</p>
+          <div class="card-footer">
+            <span class="tag">Imagery &amp; Goal Pursuit</span><span class="tag">atomic force microscopy</span><span class="tag">zinc anode</span><span class="tag">interface evolution</span><span class="tag">battery imaging</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42666899/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🎯</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>強迫症中思維-行動融合的加強但低效處理：多試驗版經典實驗的新見解</h3>
+          <p class="journal-source">Psychiatry investigation</p>
+          <p>此研究透過修改的思維-行動融合（Thought-Action Fusion, TAF）實驗，發現強迫症患者雖然在道德與災難化思維融合上表現出較高的易感性（heightened），但其認知處理卻顯得低效且難以調節，提示TAF可能是一種自動化、難以抑制的認知偏差，而非單純的信念錯誤。此發現有助於區分強迫症中的認知扭曲與一般焦慮。</p>
+          <div class="card-footer">
+            <span class="tag">Magical Thinking &amp; Psychopathology</span><span class="tag">thought-action fusion</span><span class="tag">OCD</span><span class="tag">cognitive bias</span><span class="tag">experimental psychopathology</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/36891596/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🩺</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>住院醫師在照顧重症患者時的困擾：混合方法研究</h3>
+          <p class="journal-source">Research square</p>
+          <p>此混合方法研究結合訪談與問卷調查，探討醫護人員在照顧危重病人時所經歷的情緒負擔與道德困擾。結果顯示，道德傷害（moral injury）、無力感與缺乏體制支援是導致倦怠的主要來源，而非單純工作量。研究呼籲建立系統性支援機制，如倫理諮詢團隊與正念介入，以維護醫療團隊的心理健康。</p>
+          <div class="card-footer">
+            <span class="tag">Spirituality &amp; Mental Health</span><span class="tag">clinician distress</span><span class="tag">moral injury</span><span class="tag">mixed methods</span><span class="tag">healthcare burnout</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42620103/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">💊</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>患者依附性作為認知行為療法對成人強迫症療效的中介變數</h3>
+          <p class="journal-source">Behavior therapy</p>
+          <p>此縱向研究探討在認知行為療法（CBT）治療成人強迫症的過程中，患者對治療的依附程度是否在療法技術與症狀改善之間起中介作用。結果顯示，即使控制了基礎症狀與治療劑量，較高的治療依附性仍顯著預測較好的療程結果，提示動機與參與度是CBT成效的關鍵調節因子，而非僅是技術執行的問題。</p>
+          <div class="card-footer">
+            <span class="tag">Expectancy &amp; Placebo</span><span class="tag">CBT</span><span class="tag">treatment adherence</span><span class="tag">OCD</span><span class="tag">mediation analysis</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42660581/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">Imagery &amp; Goal Pursuit</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:92%"></div></div>
+          <span class="topic-count">23</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Expectancy &amp; Placebo</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:32%"></div></div>
+          <span class="topic-count">8</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Positive Fantasies &amp; Mental Contrasting</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:4%"></div></div>
+          <span class="topic-count">1</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Magical Thinking &amp; Psychopathology</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:4%"></div></div>
+          <span class="topic-count">1</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Spirituality &amp; Mental Health</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:8%"></div></div>
+          <span class="topic-count">2</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Direct Manifestation</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">25</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">manifestation</span><span class="keyword">visualization</span><span class="keyword">mental imagery</span><span class="keyword">goal setting</span><span class="keyword">expectancy</span><span class="keyword">placebo</span><span class="keyword">open-label placebo</span><span class="keyword">tDCS</span><span class="keyword">predictive processing</span><span class="keyword">implementation intentions</span><span class="keyword">goal prioritization</span><span class="keyword">cognitive training</span><span class="keyword">surgical skill acquisition</span><span class="keyword">thought-action fusion</span><span class="keyword">OCD</span><span class="keyword">CBT</span><span class="keyword">treatment adherence</span><span class="keyword">moral injury</span><span class="keyword">clinician distress</span><span class="keyword">atomic force microscopy</span><span class="keyword">battery imaging</span><span class="keyword">amorphous</span><span class="keyword">amorphous</span><span class="keyword">amorphous</span><span class="keyword">amorphous</span><span class="keyword">amorphous</span><span class="keyword">amorphous</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
