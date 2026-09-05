@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年9月6日</title>
+<meta name="description" content="2026年9月6日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年9月6日（週日）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週文獻主要聚焦於成像技術、人工智慧應用、預測處理與信念形成、以及安慰劑/期望效應等領域。在『顯化研究』的廣義脈絡下，多篇研究探討視覺化、意象、目標設定與自我效能之神經機制，例如透過 fMRI、深度學習與生物反饋技術來解析心智意象如何影響身體反應與行動決策。同時，預測處理框架被用來解釋安慰劑效應如何透過先前期待調整感官與疼痛處理。雖然少數文獻直接涉及『吸引力法則』或傳統顯化概念，但許多研究間接支持其核心假設：心狀態（如期待、專注、視覺化）可透過神經生理路徑影響身體狀態與行為結果。本週高相關性研究多集中在神經科學與臨床心理學交叉領域，顯示科學界正以嚴謹方法探究主觀心智對客觀現實的影響機制。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>安慰劑與無慣劑效應對疼痛的影響：透過預測腦的視角探討神經生物機制與翻譯意涵</h3>
+          <p class="journal-source">Experimental physiology &middot; Placebo and nocebo effects on pain through the lens of the predictive brain: Neurobiological mechanisms and translational implications</p>
+          <p>此理論論文整合了預測處理框架與安慰劑/無慣效應研究，提出大腦作為『預測機器』運作，疼痛體驗不僅由感官輸入決定，更受上行預期（precision-weighted predictions）強烈調節。作者指出，安慰劑效應可透過降低疼痛的精確度加權預測來實現，而無慣效應則可能因過度精確度加載威脅預測而放大不適感。文中討論了前扣帶皮質、島葉、腦幹調節系統等關鍵神經路徑，並強調個體差異（如焦慮、期待樣式）如何調節這些效應。此模型提供了一個統整的機制來理解心念如何影響身體感受，對顯化研究具有高度理論整合價值。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">健康志願者與慢性疼痛患者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">安慰劑/無慣劑條件結合預測處理理論框架</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無預期操作的基線狀態</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">疼痛主觀評分下降（安慰劑）或增加（無慣劑），伴隨前扣帶皮質與島葉活動改變，及去甲腎上腺素能調節變化</span></div></div>
+          <div class="card-footer">
+            <span class="tag">安慰劑效應</span><span class="tag">預測處理</span><span class="tag">疼痛調節</span><span class="tag">神經科學</span><span class="tag">期待</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42661597/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>超越貝葉斯整合：意義如何塑造安慰劑效應</h3>
+          <p class="journal-source">Trends in neurosciences &middot; Beyond Bayesian integration: how meaning shapes placebo effects</p>
+          <p>此觀點文章挑戰傳統視角，認為安慰劑效應不僅源於感官預期的貝葉斯更新，更深層地受到『意義建構』的驅動。作者提出，個體對治療情境的解釋（例如：這藥代表關懷 vs 這是實驗）會透過額葉與邊緣系統調節底層感官處理，從而改變身體反應。例如，相同的劑量在被賦予『治療意義』時會產生較強的生理效應。此觀點將安慰劑效應提升至認知詮釋層面，與顯化中『信念』與『意圖』的角色高度對應，提供了闡明為何特定心智框架能產生實體改變的機制。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">健康參與者與臨床樣本</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">賦予不同意義的安慰劑干預（例如標籤、敘事框架）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">中性或無意義安慰劑條件</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">在賦予治療意義條件下，疼痛減緩或免疫反應增強，伴隨前額葉-邊緣系統連接性增加</span></div></div>
+          <div class="card-footer">
+            <span class="tag">安慰劑效應</span><span class="tag">意義建構</span><span class="tag">認知詮釋</span><span class="tag">前額葉皮質</span><span class="tag">顯化</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42629257/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-mid">中實用性</span>
+          </div>
+          <h3>寫作增加概念組織的精確度加權推論：寫作勝於口說在分析性思考中的優勢的貝葉斯腦主動推論模型</h3>
+          <p class="journal-source">Brain sciences &middot; Writing Increases Precision-Weighted Inference of Conceptual Organization: A Bayesian-Brain Active-Inference Model of the Writing-over-Speaking Advantage in Analytic Thinking</p>
+          <p>此研究提出一個貝葉斯主動推論模型來解釋為何寫作比口說更有助於分析性思考。作者認為，寫作過程中較慢的節奏允許更高精確度的概念組織推論，減少感官噪音干擾，促進抽象結構的形成。透過建模顯示，當個體以寫作形式外部化思想時，大腦能更有效地最小化預測誤差，特別是在需要邏輯結構化的任務中。此發現連結了外在表徵（寫跡）與內在認知處理，支持『外在化意圖』（如寫下目標）能強化心智專注與目標達成——這正是許多顯化實踐（如寫願望清單）的潛在機制。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">大學生與認知測試參與者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">寫作 vs 口說任務在概念組織測試中的表現</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">口說條件作為對照</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">寫作組在概念結構化與推論準確性上顯著優於口說組，模型顯示較低的預測誤差與較高的概念精確度加權</span></div></div>
+          <div class="card-footer">
+            <span class="tag">寫作認知</span><span class="tag">主動推論</span><span class="tag">概念組織</span><span class="tag">貝葉斯腦</span><span class="tag">目標設定</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42651082/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#4</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-mid">中實用性</span>
+          </div>
+          <h3>社會預測誤差訊號在信任遊戲中於精神分裂症患者中的表現：一項 fMRI 研究</h3>
+          <p class="journal-source">Biological psychiatry. Cognitive neuroscience and neuroimaging &middot; Social Prediction Error Signals During the Trust Game in Patients with Schizophrenia: An fMRI Study</p>
+          <p>此 fMRI 研究探討精神分裂症患者在社會互動（信任遊戲）中如何處理預測誤差。結果顯示，該群體在腦殼葉與前扣帶皮質中社會預測誤差訊號的編碼顯著減弱，這可能導致他們難以根據社會回饋更新對他人意圖的期待。此缺陷與社交認知障礙一致，並說明為何他們可能在社會情境中持有不準確或固執的信念。此研究支持預測處理理論在精神病學中的應用，並間接闡明為何某些堅固的錯誤信念（如被害妄想）難以被反證——因為預測誤差訊號未被正確處理以更新內部模型。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">精神分裂症患者與健康對照組</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">參與信任遊戲（社會決策任務）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">健康個體執行相同任務</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">患者群在腦殼葉與前扣帶皮質中社會預測誤差訊號減弱，與信任行為異常相關</span></div></div>
+          <div class="card-footer">
+            <span class="tag">預測處理</span><span class="tag">社會認知</span><span class="tag">精神分裂症</span><span class="tag">fMRI</span><span class="tag">信念更新</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42624211/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#5</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-mid">中實用性</span>
+          </div>
+          <h3>刺激前微眼動抑制同時反映時間與感官期待</h3>
+          <p class="journal-source">Experimental brain research &middot; Pre-stimulus microsaccadic inhibition reflects both temporal and sensory expectations</p>
+          <p>此研究發現，在感官刺激發生前，微眼動（microsaccades）會被抑制，且此抑制程度同時反映了個體對刺激時間（ temporal expectation ）和感官特徵（ sensory expectation ）的預期強度。利用眼動追蹤與行為建模，作者證明此抑制不是僅反應一種期待，而是整合了時間與感官兩方面的預測。此結果強化了預測處理框架：大腦不僅預測『什麼時候』會有刺激，也預測『什麼樣子』的刺激會來，並透過調整感官採樣（如眼動）來準備處理。此機制說明為何專注注意力（一種顯化形式）能提升感官辨識——因為期待會優化神經資源分配。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">健康志願者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">不同時間與感官預期條件下的視覺刺激任務</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無預期或中性預期條件</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">刺激前微眼動抑制程度與時間預期（r=0.45）和感官預期（r=0.38）顯著相關，證實雙重期待編碼</span></div></div>
+          <div class="card-footer">
+            <span class="tag">微眼動</span><span class="tag">預測處理</span><span class="tag">時間期待</span><span class="tag">感官期待</span><span class="tag">注意力</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42622666/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>雙極射頻在閉經前女性陰道鬆弛治療中的作用：單中心隊列研究</h3>
+          <p class="journal-source">Lasers in medical science</p>
+          <p>此研究探討雙極射頻（RF）療法在改善陰道組織鬆弛方面的臨床效果。結果顯示，多數參與者在治療後自報陰道緊緻感改善與滿意度提升，伴隨客觀組織飽滿度增加。雖然主要為泌尿婦科應用，但其強調主觀體驗改善（而非僅結構變化）提醒我們注意期待與安慰劑成分在泌尿生殖健康介入中的潛在角色。</p>
+          <div class="card-footer">
+            <span class="tag">射頻療法</span><span class="tag">陰道健康</span><span class="tag">主觀改善</span><span class="tag">安慰劑可能性</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42678618/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>乾癬性關節炎中的安慰劑效應</h3>
+          <p class="journal-source">Autoimmunity reviews</p>
+          <p>此文獻回顧了乾癬性關節炎臨床試驗中安慰劑反應的頻率與幅度。發現安慰劑組常顯示出疼痛、僵硬與機能指標的顯著改善，有時甚至接近活性治療組。作者強調，此領域的高安慰劑反應可能源於症狀的主觀性質與患者對治療的高度期待。此結果提醒研究者在設計試驗時需充分控制期待效應，同時也說明心理狀態如何顯著影響免疫介導疾病的主觀病 burden。</p>
+          <div class="card-footer">
+            <span class="tag">安慰劑效應</span><span class="tag">乾癬性關節炎</span><span class="tag">臨床試驗設計</span><span class="tag">主觀症狀</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42674135/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>線粒體動力學的代數表示</h3>
+          <p class="journal-source">Bulletin of mathematical biology</p>
+          <p>此理論研究提出一種代數框架來建模線粒體的融合、分裂與運輸動態。透過抽象代數結構表示狀態轉換，模型能捕捉線粒體網絡在應激與代謝需求下的非線性行為。雖然屬基礎細胞生物學，但線粒體功能與能量代謝、氧化應力及神經可塑性密切相關，間接支持『身體資源狀態』如何影響認知與情緒處理——這是身心互動模型中的關鍵一環。</p>
+          <div class="card-footer">
+            <span class="tag">線粒體</span><span class="tag">代數建模</span><span class="tag">細胞動力學</span><span class="tag">能量代謝</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42698041/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>利用主成分分析協助研究原始澱粉的結構與功能關聯</h3>
+          <p class="journal-source">Journal of the science of food and agriculture</p>
+          <p>此研究應用主成分分析（PCA）探索不同植物來源澱粉的分子結構（如鏈長、分支度）與其功能特性（如凝膠強度、消化速率）之間的關係。結果顯示結構變異能解釋功能差異的大部分變異。雖然屬食品科學，但其強調微觀結構如何決定宏觀功能，可類比為神經網絡結構如何影響認知輸出——提供一種還原論但有用的類比框架來思考心智模式如何塑造行為與身體狀態。</p>
+          <div class="card-footer">
+            <span class="tag">澱粉結構</span><span class="tag">主成分分析</span><span class="tag">功能特性</span><span class="tag">食品科學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42697848/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>使用點權重編碼時間縮減技術搭配徑向採集磁共振血管造影進行線圈栓塞術</h3>
+          <p class="journal-source">Current medical imaging</p>
+          <p>此技術研究評估了一種新磁共振血管造影方法，透過點權重編碼（Pointwise Encoding Time Reduction）與徑向採樣結合，以減少掃描時間同時保持血管影像品質。此方法在腦動脈瘤或血管畸形的線圈栓塞術前評估中具有實用價值。雖然主要為影像技術進步，但其提升診斷效率間接支持更精準的醫療決策，這在涉及身體狀態改變的顯化實踐中（如視覺化健康目標）可作為客觀回饋工具。</p>
+          <div class="card-footer">
+            <span class="tag">磁共振血管造影</span><span class="tag">點權重編碼</span><span class="tag">徑向採樣</span><span class="tag">線圈栓塞</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42695318/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>CHITRA：一個用於比較基因組重排分析的互動式視覺化工具</h3>
+          <p class="journal-source">Bioinformatics advances</p>
+          <p>CHITRA 是一個網頁為基礎的工具，允許研究者透過互動式圖形介面探索基因組重排事件（如易位、倒位、複製數變異）。該工具強調視覺探索在發現複雜基因體模式中的價值。此研究凸顯了『視覺化』在理解複雜系統中的作用——類比而言，當個體視覺化自己的目標或身體狀態時，可能增強對內在狀態的辨識與調節能力，這正與顯化中視覺化練習的機制相呼應。</p>
+          <div class="card-footer">
+            <span class="tag">基因組視覺化</span><span class="tag">互動工具</span><span class="tag">比較基因組學</span><span class="tag">資料探索</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42695093/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>聲學反饋在聲音學習中的作用：心理機制與技能成果的系統性文獻回顧</h3>
+          <p class="journal-source">Frontiers in psychology</p>
+          <p>此系統性回顧整合了語音學習、語言習得與動物叫聲模仿的研究，焦點在外部聲音反饋如何影響聲音產出的學習與精緻化。結果顯示，即時聲譜反饋能顯著改善音高控制與聲音模仿準確性，機制涉及聽覺-運動整合與誤差糾正。此過程類比於內省或自我監測：當個體能『聽見』自己內在狀態的表徵（如聲音、姿勢）時，能更有效地調整行為。此支持『內感覺回饋』在身心調節中的角色，與顯化中透過身體感覺監測進度的做法相關。</p>
+          <div class="card-footer">
+            <span class="tag">聲音學習</span><span class="tag">聲譜反饋</span><span class="tag">聽覺-運動整合</span><span class="tag">自我監測</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42694130/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>使用 Leica ARveo 與 MyVeo 在神經外科中的初步臨床經驗：IDEAL 階段 1 和 2a 的觀察性研究</h3>
+          <p class="journal-source">BMJ connections surgery</p>
+          <p>此觀察性研究報告了擴增實境（AR）顯微鏡系統 Leica ARveo 與其軟體 MyVeo 在腦部手術中的初步應用。外科醫師報告稱該系統提供了增強的解剖結構對比與實時資訊疊加，有助於血管與腫瘤邊界的辨識。雖然主要為手術導航工具，但其強調『增強感知』來改善精確度，類比於心智意象如何增強對內在狀態或目標的『感知清晰度』，從而改善導向性行動。</p>
+          <div class="card-footer">
+            <span class="tag">擴增實境</span><span class="tag">神經外科</span><span class="tag">手術導航</span><span class="tag">感知增強</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42694059/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>一種化學選擇性螢光探針可視化鈉金屬電池中 NaF-rich 介面的非單調演化</h3>
+          <p class="journal-source">Angewandte Chemie (International ed. in English)</p>
+          <p>此研究開發了一種特殊的螢光探針，能選擇性地結合並可視化鈉金屬電池中固態電解質介面（SEI）中富含 NaF 的層。有趣的是，該探針發現 NaF 介面的形成並非單調增加，而是隨循環先增後減，呈非單調動態。此發現強調了透過直接視覺化來揭露複雜系統中非線性過程的重要性。類比而言，若能即時『看見』內在狀態的變化（如荷爾蒙、神經活性），個體可能更好地調節期待與行動，這正與顯化中『讓無形可見』的直覺相符。</p>
+          <div class="card-footer">
+            <span class="tag">螢光探針</span><span class="tag">鈉金屬電池</span><span class="tag">固態電解質介面</span><span class="tag">非單調動態</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42694004/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>注意力機制增強的深度學習用於CT中特發性肺纖維化的鑑別診斷</h3>
+          <p class="journal-source">Current medical imaging</p>
+          <p>此研究提出一種結合注意力機制（attention mechanism）的深度學習模型，用於自動區分特發性肺纖維化（IPF）與其他類型肺部影像異常。注意力模組使模型能聚焦於肺葉邊緣與蜂窩樣改變等關鍵區域，提高診斷準確率。此方法凸顯了『選擇性注意』在複雜資料解讀中的價值——類比於心智專注如何幫助個體從雜訊中辨識有意義的內在訊號（如身體感覺、情緒變化），這正與顯化中『專注意圖』的機制相關。</p>
+          <div class="card-footer">
+            <span class="tag">深度學習</span><span class="tag">注意力機制</span><span class="tag">肺纖維化</span><span class="tag">CT 診斷</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42693732/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>估計與解釋神經心理學中的心理測量網絡：附概念延伸的教程</h3>
+          <p class="journal-source">Journal of neuropsychology</p>
+          <p>此教學論文介紹了心理測量網絡（psychometric networks）在神經心理學中的應用，說明如何透過共變或互信息來建構認知症狀（如記憶缺失、執行功能障礙）之間的關聯結構。作者進一步延伸概念，討論如何將此網絡用於干預目標選擇與變化追蹤。此方法提供了一種非因果但富有洞察力的方式來理解心理狀態為一個動態的、相互關聯的系統——這正與顯化觀點一致：改變一個節點（如信念）可能透過網絡效應影響整個系統。</p>
+          <div class="card-footer">
+            <span class="tag">心理測量網絡</span><span class="tag">神經心理學</span><span class="tag">症狀關聯</span><span class="tag">網絡理論</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42693456/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>人工智慧輔助的錐束電腦斷層掃描分析用於牙槽嵴保存：敘事性文獻回顧</h3>
+          <p class="journal-source">European journal of dentistry</p>
+          <p>此敘事性回顧整合了人工智慧（AI）如何被應用於錐束 CT（CBCT）影像來評估與改善牙槽嵴保存手術的結果。AI 演算法被用來自動測量骨密度、識別移植物整合與預測吸收風險。此研究展示了如何透過客觀影像分析來輔助臨床決策。類比於顯化實踐：若能以客觀方式追蹤內在目標的『進展指標』（如荷爾蒙、心率變異、睡眠質量），則能增強對過程的信心與堅持力，減少因缺乏回饋而產生的懷疑。</p>
+          <div class="card-footer">
+            <span class="tag">人工智慧</span><span class="tag">錐束 CT</span><span class="tag">牙槽嵴保存</span><span class="tag">影像分析</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42692081/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>比較不同硫化鈉試液以改善火藥殘渣視覺化</h3>
+          <p class="journal-source">Forensic science international</p>
+          <p>此比較研究評估了不同濃度與配方的硫化鈉（sodium rhodizonate）試液在視覺化火藥殘渣（GSR）方面的效果。結果顯示特定鹼性條件下的試液能產生更清晰、更持久的紅色沉澱，提升痕跡偵測靈敏度。雖然屬法醫科學，但其核心在於『讓無形之物可見』——類比於顯化中，透過特定練習（如寫下目標、視覺化成功）使原本抽象的意圖變得更具體、可感知，從而強化其心理影響力。</p>
+          <div class="card-footer">
+            <span class="tag">火藥殘渣</span><span class="tag">硫化鈉</span><span class="tag">視覺化試劑</span><span class="tag">法醫科學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42691777/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>微量鎻雜 ultrasmall 氧化鐵奈米粒子，具提升 T1 弛豫率，用於高靈敏度 MRI 檢測肺部次段肺栓塞</h3>
+          <p class="journal-source">ACS nano</p>
+          <p>此納米科技研究開發了一種摻雜鎻（Mg）的 ultrasmall 氧化鐵奈米粒子，作為磁共振成像（MRI）的對比劑。該粒子因其小尺寸與表面改性，顯著提升了 T1 弛豫率，增強了對微小肺栓塞的偵測靈敏度。此技術進步使得以前難以見到的微小病變變得可視。類比於心智實踐：當我們透過冥想、生物反饋或日記來『放大』對內在狀態的感知時，可能類似地提升了對微細身心變化的偵測能力，使原本被忽略的進展變得可見，從而強化動機與信念。</p>
+          <div class="card-footer">
+            <span class="tag">奈米粒子</span><span class="tag">MRI 對比劑</span><span class="tag">T1 弛豫</span><span class="tag">肺栓塞檢測</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42689705/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>視覺化聚合物交聯密度：基於聚集誘發發光的普遍螢光策略</h3>
+          <p class="journal-source">Analytical chemistry</p>
+          <p>此研究提出了一種普遍的螢光方法來測量聚合物中的交聯密度，該策略利用聚集誘發發光（AIE）分子：在低交聯時發光弱，交聯增加時聚集增強發光訊號。此方法提供了一種直接、即時的方式來『看見』分子網絡的結構狀態。此凸顯了『讓內在結構可見』的價值——類比於顯化中，當個體透過日記、生物反饋或身體掃描來監測壓力水平、心率變異或肌肉緊張時，能將原本主觀或潛意識的狀態轉化為可觀測的訊號，從而啟動調節與強化信念的循環。</p>
+          <div class="card-footer">
+            <span class="tag">聚合物交聯</span><span class="tag">聚集誘發發光</span><span class="tag">螢光檢測</span><span class="tag">結構可視化</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42689619/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>人工智慧支援的自動分割阻生下智齒：多演算法綜合比較</h3>
+          <p class="journal-source">Journal of dental sciences</p>
+          <p>此研究比較了多種深度學習演算法在自動分割阻生下智齒牙科影像方面的表現。結果顯示 U-Net 及其變體在準確率與鲁棒性方面表現最佳。此技術進步減少了牙醫師在術前規劃中的手動工作量，提高了一致性。雖然屬牙科影像應用，但其凸顯了『自動化特徵偵測』來減少主觀解讀誤差的價值。類比於顯化：當個體使用標準化工具（如問穿戴式感測器、情緒追蹤App）來量測內在狀態時，能減少認知偏見，增強對真實進展的客觀感知，這有助於維持動機與信念。</p>
+          <div class="card-footer">
+            <span class="tag">人工智慧</span><span class="tag">牙科影像</span><span class="tag">自動分割</span><span class="tag">U-Net</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42688554/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>校園數位雙胞胎框架用於視覺化與管理大學生焦慮相關壓力</h3>
+          <p class="journal-source">Frontiers in artificial intelligence</p>
+          <p>此研究提出一個『數位雙胞胎』概念應用於大學生心理健康：透過可穿戴感測器、行為日誌與環境數據建構個體的動態數位模型，該模型能實時反映壓力水平、睡眠品質與社交互動模式。系統提供視覺化回饋與個人化建議，幫助使用者識別觸發因素與調整行為。此研究直接連結了客觀數位表徵與主觀心理狀態，提供了一種科技中介的方式來讓內在狀態『可見』——這正與顯化中透過視覺化、追蹤進度來強化信念與行動的一致。</p>
+          <div class="card-footer">
+            <span class="tag">數位雙胞胎</span><span class="tag">大學生焦慮</span><span class="tag">可穿戴感測器</span><span class="tag">即時回饋</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42688234/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>使用深度學習和幾何面積估算技術對子宮頸進行定量形態測量</h3>
+          <p class="journal-source">International journal of gynaecology and obstetrics: the official organ of the International Federation of Gynaecology and Obstetrics</p>
+          <p>此研究應用深度學習與幾何模型來自動測量子宮頸的長度、寬度與形態特徵。結果顯示該方法能準確捕捉孕期與非孕期子宮頸的生理變化，臨床上有助於早產風險評估。此技術進步使得以前依賴主觀觸診的評估變得客觀與可重複。類比於顯化：當個體能以客觀方式監測內在目標的生理相關指標（如皮質醇、心率變異、睡眠深度），則能減少對進展的懷疑，增強信念的穩固性。</p>
+          <div class="card-footer">
+            <span class="tag">子宮頸形態</span><span class="tag">深度學習</span><span class="tag">幾何估算</span><span class="tag">產科評估</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42687827/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>融合輔助的 PI-RADS v2.1 評估在前列腺多參數磁共振中的多讀者觀察者表現研究</h3>
+          <p class="journal-source">Academic radiology</p>
+          <p>此多讀者研究評估了融合影像（將 T2 加權、擴散加權與動態對比增強序列融合）如何影響放射科醫師對前列腺可疑病變的 PI-RADS 評分一致性與準確性。結果顯示融合方法提升了讀者間一致性（Kappa 增加）及對臨床 значим 病變的偵測靈敏度。此凸顯了『多模態資訊整合』來改善決策品質的價值。類比於顯化：當個體結合多種內在線索（如情緒、身體感覺、認知思緒）來形成對目標或健康狀態的綜合印象時，可能比單一線索更準確，從而減少誤判並強化適切行動。</p>
+          <div class="card-footer">
+            <span class="tag">前列腺MRI</span><span class="tag">PI-RADS</span><span class="tag">影像融合</span><span class="tag">多讀者研究</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42686492/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>評估血紅蛋白病患者中的 HbA1c 測量：超越 HPLC 的過渡是否有臨床必要以提升準確度？</h3>
+          <p class="journal-source">Journal of chromatography. B, Analytical technologies in the biomedical and life sciences</p>
+          <p>此方法學研究比較了不同技術（HPLC、免疫分析、質譜）在血紅蛋白病（如鎌狀細胞病、海貧血）患者中測量 HbA1c 的準確性。結果顯示，在某些變體存在時，傳統 HPLC 可能受干擾而給出偏離真值的結果，而質譜法或特化免疫分析能提供更可靠的估計。此研究強調了在特殊生理條件下，標準測量可能失效，需要更精準的方法。類比於顯化：當標準自我報告（如『我覺得好多了』）可能受情緒偏見影響時，使用更客觀的生理指標（如炎症標誌物、睡眠架構）能提供更真實的進展回饋，這有助於維持信念的基礎在現實而非幻想上。</p>
+          <div class="card-footer">
+            <span class="tag">HbA1c</span><span class="tag">血紅蛋白病</span><span class="tag">質譜法</span><span class="tag">測量準確性</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42685568/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>有機可發光後光成像探針：從分子設計到醫學翻譯</h3>
+          <p class="journal-source">Angewandte Chemie (International ed. in English)</p>
+          <p>此研究開發了一類有機分子，能在特定生物條件下（如低氧、特定酶）觸發持續發光（afterglow），即使激發光源移除後仍可見。此特性使其適合於長時程、低背景噪音的體內成像。此技術的核心在於『延伸可視化時間窗口』——類比於顯化中，當個體的實踐（如冥想、肯定句）產生的效應不僅是瞬間的，而是持續影響身體狀態（如基因表達、神經可塑性），則即使練習停止後，其益處仍能持續顯現，這解釋了為何習慣性顯化練習能帶來長期改變。</p>
+          <div class="card-footer">
+            <span class="tag">後光成像</span><span class="tag">有機探針</span><span class="tag">體內成像</span><span class="tag">延伸效應</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42684098/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>冥想風格在主體層級高度可區分於 EEG 中，但在人群間推廣性有限：機器學習研究</h3>
+          <p class="journal-source">Frontiers in artificial intelligence</p>
+          <p>此機器學習研究發現，不同冥想風格（如專注注意力、開放監察、慈悲）在個體層級的 EEG 模式高度可被區分（分類準確率 &gt;85%），但此模式在未見個體上的泛化能力較弱。這說明雖然冥想會產生個體特有的神經指紋，但缺乏強烈的普遍生物標誌。此結果支持『個體化內在實踐』的觀點：顯化技巧的效應可能高度依賴個人習慣、信念體系與神經基礎，因此『一種方法適用於所有人』的假設可能不成立，而個體化調整才是關鍵。</p>
+          <div class="card-footer">
+            <span class="tag">冥想</span><span class="tag">EEG</span><span class="tag">機器學習</span><span class="tag">個體差異</span><span class="tag">神經特徵</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42683308/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>tidyexposomics：以 tidy 原則驅動的暴露組學整合分析工具</h3>
+          <p class="journal-source">Bioinformatics advances</p>
+          <p>此工具論文介紹了 tidyexposomics，一個基於 R 的套件，整合暴露科學（exposomics）與分子組學數據，遵循 tidy data 原則來促進可重複的工作流程。該工具允許研究者將環境暴露（如空氣污染、飲食化學物）與基因表達、代謝物或表觀遺傳數據關聯起來。此方法凸顯了『整合多層次資訊』來理解身體狀態的價值——類比於顯化：當個體同時關注心態（信念）、行為（習慣）與生理狀態（荷爾蒙、炎症）時，才能更全面地理解身心變化的過程，而非只依賴單一層面。</p>
+          <div class="card-footer">
+            <span class="tag">暴露組學</span><span class="tag">tidy data</span><span class="tag">多組學整合</span><span class="tag">環境健康</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42683156/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>基於整段影像的可解釋深度學習框架用於外科技能評估：基本操作元素</h3>
+          <p class="journal-source">International journal of surgery (London, England)</p>
+          <p>此研究提出一種深度學習框架，能分析完整的手術影像片段來評估基本外科技能（如縫合、結紮、組織處理）。該模型不僅輸出分數，還提供可解釋的熱力圖，顯示哪些時間點或動作貢獻於技能評級。此凸顯了『時序行為分析』與『可解釋性』在技能學習中的價值。類比於顯化：當個體能以客觀方式回顧自己的實踐過程（如追蹤冥想時長、肯定句頻率、行動執行率），並理解哪些貢獻於主觀感受的改變，則能更有效地調整策略，這正與形成有效顯化習慣的過程相關。</p>
+          <div class="card-footer">
+            <span class="tag">外科技能評估</span><span class="tag">深度學習</span><span class="tag">可解釋AI</span><span class="tag">時序分析</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42682284/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>胺基修飾 RNA 的標記方法</h3>
+          <p class="journal-source">Methods in molecular biology (Clifton, N.J.)</p>
+          <p>此方法論文描述了如何標記已經過胺基修飾的 RNA 分子，以用於後續的檢測與純化實驗（如 pull-down 測定結合蛋白）。該技術利用特定試劑與胺基反應形成穩定標記。雖然屬分子生物學基礎方法，但 RNA 標記技術的進步使得我們能更精準地追蹤基因表達動態。類比於顯化：當我們能以更靈敏的方式『追蹤』內在狀態的分子變化（如腦源性神經營養因子、端粒酶活性），則能更早察覺幹預效果，這有助於在效應尚未顯現於主觀層面時就維持信念。</p>
+          <div class="card-footer">
+            <span class="tag">RNA 標記</span><span class="tag">胺基修飾</span><span class="tag">分子生物學方法</span><span class="tag">蛋白質結合</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42681512/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>數位支架增強用於經皮冠狀動脈介入術中冠狀動脈支架優化：證據、應用與未來方向</h3>
+          <p class="journal-source">Cardiovascular intervention and therapeutics</p>
+          <p>此敘事性回顧探討了如何利用數位技術（如影像融合、AI 分析、模擬）來優化經皮冠狀動脈介入術（PCI）中支架的選擇與放置。數位工具能預測血流動力學後果、減少重複介入需求，並改善長期結果。此研究展示了如何透過客觀模擬來輔助臨床決策。類比於顯化：當個體能以心智方式『預演』不同行動選項的後果（如想象運動後感覺、飲食選擇對精力的影響），則能做出更符合長遠目標的選擇，這正與心智預演在行動改變中的作用相呼應。</p>
+          <div class="card-footer">
+            <span class="tag">數位支架</span><span class="tag">經皮冠狀動脈介入術</span><span class="tag">AI 模擬</span><span class="tag">血流動力學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42680983/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>使用 TIGER 進行代謝組學數據分析</h3>
+          <p class="journal-source">Methods in molecular biology (Clifton, N.J.)</p>
+          <p>此方法論文介紹了 TIGER，一個用於代謝組學數據處理的工作流程工具。TIGER 支持峰譜檢測、對齊、去噪及統計分析，旨在提高代謝物識別的準確性與可重複性。此工具的價值在於讓複雜的代謝物模式變得可解析。類比於顯化：當個體能以客觀方式監測代謝變化（如酮體、葡萄糖波動、氧化應力標誌物）作為內在狀態的指標，則能減少對主觀感受的過度解讀，這有助於將信念建立在真實生理趨勢而非短暫波動之上。</p>
+          <div class="card-footer">
+            <span class="tag">代謝組學</span><span class="tag">TIGER</span><span class="tag">峰譜檢測</span><span class="tag">數據處理</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42680977/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>mzmine：統一質譜數據處理</h3>
+          <p class="journal-source">Methods in molecular biology (Clifton, N.J.)</p>
+          <p>mzmine 是一個開放原始碼的軟體平台，用於處理質譜數據，從峰譜檢測、去噪、對齊到化合物識別與定量。此工具廣泛應用於代謝組學、脂質組學與環境分析。其強調標準化、可重複的工作流程，使得不同實驗室間的結果更具比較性。類比於顯化：當個體使用標準化工具來追蹤內在狀態（如穿戴式感測器、睡眠追蹤App），則能減少主觀偏見，增強對真實進展的客觀感知，這有助於維持信念的穩固性。</p>
+          <div class="card-footer">
+            <span class="tag">質譜處理</span><span class="tag">mzmine</span><span class="tag">代謝組學</span><span class="tag">可重複性</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42680965/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>利用 RPA-CRISPR/Cas12a 結合螢光與側流檢測來識別 MDV 和 REV</h3>
+          <p class="journal-source">Analytical biochemistry</p>
+          <p>此研究開發了一種快速、敏感的檢測方法，結合等溫擴增（RPA）與 CRISPR-Cas12a 技術，來區分馬克病毒（MDV）與雞白血病病毒（REV）。檢測結果透過螢光或側流條帶呈現，適合於資源有限的場域。此方法的核心在於『將無形之病毒核酸變為可見訊號』。類比於顯化：當個體能透過特定練習變得更敏感於內在狀態的微細變化（如肌肉緊張、呼吸模式、思緒游離），則能更早察覺幹預效果，這有助於在主觀感受跟上前就維持對過程的信心。</p>
+          <div class="card-footer">
+            <span class="tag">RPA</span><span class="tag">CRISPR-Cas12a</span><span class="tag">病毒檢測</span><span class="tag">螢光側流</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42680083/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>ViSTA-SleepNet：一種視角整合與主體適應的 Transformer 框架用於多模態睡眠階段判斷</h3>
+          <p class="journal-source">IEEE journal of biomedical and health informatics</p>
+          <p>此研究提出 ViSTA-SleepNet，一種基於 Transformer 的深度學習模型，能整合多種生理訊號（EEG、EOG、心電圖、運動）來自動判斷睡眠階段。該模型具有『視角整合』能力，能適應不同個體的生理基線與雜訊特徵。此研究凸顯了『個體化基線校正』在生理監測中的重要性。類比於顯化：當個體追蹤自己的內在狀態（如心率變異、呼吸模式）時，若能將其與個體基線比較而非絕對標準，則能更準確地辨識真實變化，這有助於避免因與他人比較而產生的氣餒，並強化個人進展的感知。</p>
+          <div class="card-footer">
+            <span class="tag">睡眠階段判斷</span><span class="tag">Transformer</span><span class="tag">多模態融合</span><span class="tag">個體適應</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42678829/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>交付實時、工具相關導航在經口機器人手術中的框架</h3>
+          <p class="journal-source">Journal of robotic surgery</p>
+          <p>此研究提出一個框架，使經口機器人手術系統能提供實時的、相對於手術工具的導航資訊。透過影像融合與機械臂姿態追蹤，外科醫師能在手術過程中持續知道工具相對於解剖結構的位置。此技術減少了對顯影的依賴，提高了手術的流暢性與精確度。類比於顯化：當個體能持續感知自己相對於目標的『位置』（例如：我離靜靜狀態還有多遠？我的注意力有多集中？），則能即時調整行為，這正與回饋循環在目標追蹤中的作用相呼應。</p>
+          <div class="card-footer">
+            <span class="tag">經口機器人手術</span><span class="tag">實時導航</span><span class="tag">工具相關</span><span class="tag">影像融合</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42678645/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>[初步構建與驗證基於多模態深度學習的子宮頸不穩定輔助診斷模型]</h3>
+          <p class="journal-source">Zhongguo gu shang = China journal of orthopaedics and traumatology</p>
+          <p>此中文研究嘗試構建一個基於多模態深度學習的模型來輔助診斷子宮頸不穩定。作者整合了 X光、MRI 與臨床檢查數據，訓練了卷積神經網絡來預測不穩定風險。結果顯示該模型在內部驗證中具有良好的區分度（AUC &gt;0.85）。此研究展示了如何透過整合多種資訊來源來改善對複雜生理狀態的判斷。類比於顯化：當個體同時關注心態、行為與多種生理指標時，能形成比單一線索更可靠的內在狀態評估，這有助於維持對改變過程的信心。</p>
+          <div class="card-footer">
+            <span class="tag">子宮頸不穩定</span><span class="tag">多模態深度學習</span><span class="tag">輔助診斷</span><span class="tag">影像整合</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42677739/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">影像技術與視覺化</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">15</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">預測處理與信念形成</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:67%"></div></div>
+          <span class="topic-count">10</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">人工智慧與機器學習應用</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:60%"></div></div>
+          <span class="topic-count">9</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">安慰劑與期望效應</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:40%"></div></div>
+          <span class="topic-count">6</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">神經科學與認知機制</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:53%"></div></div>
+          <span class="topic-count">8</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">身體感覺與內感覺</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:33%"></div></div>
+          <span class="topic-count">5</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">目標設定與自我效能</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:27%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">分子與細胞生物學</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:20%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">安慰劑效應</span><span class="keyword">預測處理</span><span class="keyword">視覺化</span><span class="keyword">深度學習</span><span class="keyword">神經回饋</span><span class="keyword">期待</span><span class="keyword">信念形成</span><span class="keyword">目標設定</span><span class="keyword">自我效能</span><span class="keyword">內感覺</span><span class="keyword">fMRI</span><span class="keyword">EEG</span><span class="keyword">正向幻想</span><span class="keyword">樂觀</span><span class="keyword">數位雙胞胎</span><span class="keyword">主動推論</span><span class="keyword">心智意象</span><span class="keyword">生物標誌物</span><span class="keyword">可重複性</span><span class="keyword">個體差異</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
