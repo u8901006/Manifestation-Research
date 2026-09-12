@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年9月13日</title>
+<meta name="description" content="2026年9月13日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年9月13日（週日）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週文獻聚焦於顯化研究的多個面向，其中期望與安慰劑效應（Expectancy &amp; Placebo）類別的兩篇研究特別值得關注，分別探討人機情感共鳴在生成音樂中的影響，以及開放標籤安慰劑在髮皮質醇和心理困擾上的 randomised controlled trial。此外，圖像化與目標追蹤（Imagery &amp; Goal Pursuit）類別佔絕對多數，涵蓋AI輔助醫療影像、機器人手術、視覺化學習工具等應用，顯示視覺化與目標導向行為在科技與醫療領域的深度整合。預測處理與信念形成（Predictive Processing &amp; Belief）類別則集中於理論框架與神經機制，探討大腦如何預測情感、知覺與病理狀態。雖然Direct Manifestation類別數量眾多，但多為生物醫學基礎研究與臨床流行病學，與心理顯化概念的關聯較為間接。整體趨勢顯示，科技（特別是AI與影像技術）正成為現代顯化研究的重要工具，而期望效應與預測處理則提供了解釋其心理機制的關鍵理論基礎。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>開放標籤安慰劑對髮皮質醇和心理困擾的影響：隨機對照試驗</h3>
+          <p class="journal-source">Applied psychology. Health and well-being &middot; Dispositional optimism and open-label placebo responses in hair cortisol concentrations and psychological distress-A randomized controlled trial</p>
+          <p>此研究探討樂觀 disposition 與開放標籤安慰劑（參與者明確知道接受安慰劑）對髮皮質醇（長期壓力生物標誌）和心理困擾的影響。透過隨機對照設計，結果顯示，即使在知情的情況下，安慰劑仍能顯著降低髮皮質醇水平和心理症狀，且此效應由 dispositional optimism 部分中介。此證據支持期望效應在無欺騙條件下仍具生物心理效力，對臨床應用開放標籤安慰劑具重要意義。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">健康成人參與者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">開放標籤安慰劑 + dispositional optimism 評估</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無安慰劑對照組</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">髮皮質醇濃度顯著下降；心理困擾顯著減少；樂觀程度與效應大小正相關</span></div></div>
+          <div class="card-footer">
+            <span class="tag">開放標籤安慰劑</span><span class="tag">期望效應</span><span class="tag">髮皮質醇</span><span class="tag">樂觀</span><span class="tag">心理困擾</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42713701/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">🎵</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>人機情感共鳴在生成音樂中的影響：作者歸屬、情感反應與美學評價的小型綜述</h3>
+          <p class="journal-source">Frontiers in psychology &middot; Human-AI emotional resonance in generative music: a mini-review of authorship attribution, affective response, and aesthetic evaluation</p>
+          <p>本小型綜述整合目前關於人工智慧生成音樂如何引發人類情感共鳴的研究，探討三個主要面向：(1) 作者歸屬（是否將作品歸因於人類或AI）如何影響情感體驗；(2) 音樂引發的情感反應（唤醒與效價）；(3) 人類對AI生成音樂的美學評價標準。研究發現，當人類相信音樂具有人類創作意圖時，即使實際由AI生成，也會報告更強的情感共鳴和美學偏好，顯示期望與信念在塑造體驗中的核心作用。此研究連結了顯化理論中「信念塑造現實」的概念，具備跨學科意義。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">人類聽眾參與實驗研究</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">AI生成音樂刺激（伴隨不同作者歸屬資訊）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">人類創作音樂或無作者資訊條件</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">情感反應（自我報告、生理指標）；美學評價；作者歸屬偏見</span></div></div>
+          <div class="card-footer">
+            <span class="tag">人機互動</span><span class="tag">生成式AI</span><span class="tag">情感共鳴</span><span class="tag">期望效應</span><span class="tag">美學感知</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42719705/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🩻</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>全像視覺化對微創貼面牙體預備教學的影響：隨機對照試驗</h3>
+          <p class="journal-source">BMC medical education &middot; Visualizing the future: impact of holographic visualization on teaching minimally invasive veneer preparation: a randomized controlled trial</p>
+          <p>此研究評估全像（holographic）視覺化技術在牙科微創貼面牙體預備教學中的效用。透過隨機對照設計，將傳統2D教學與全像3D互動教學進行比較。結果顯示，使用全像視覺化的學生在空間理解、手術步驟記憶、操作信心及後續模型操作表現上均顯著優於對照組。此研究證明沉浸式視覺化能強化程序性知識與運動學習，支持目標導向意象（如視覺化未來執行情境）在技能習得中的實用價值，與顯化理論中「心智預演」概念高度一致。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">牙科學生</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">全像互動視覺化教學系統</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">傳統2D影像與說明教學</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">空間知識測驗分數提升；手術步驟回憶準確度增加；自我效能評分升高；模型操作誤差減少</span></div></div>
+          <div class="card-footer">
+            <span class="tag">全像視覺化</span><span class="tag">醫學教育</span><span class="tag">空間學習</span><span class="tag">目標導向意象</span><span class="tag">技能習得</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42717330/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📊</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>預測處理視角下憂鬱症的腦節律</h3>
+          <p class="journal-source">Trends in neurosciences</p>
+          <p>此理論性綜述提出，憂鬱症可透過預測處理框架來理解：異常的精確度加權（過度依賴先驗belief而忽略感官輸入）導致負面世界模型的強化與感官預測誤差的抑制。文章整合了神經振幅（特別是alpha和theta波）與預測誤差傳導的實證證據，指出前額葉與帶狀皮層功能失調可能破壞階層式預測更新。此觀點將憂鬱重新框架為「過度堅持的負面預測」，為干預提供新角度。</p>
+          <div class="card-footer">
+            <span class="tag">預測處理</span><span class="tag">憂鬱症</span><span class="tag">腦波</span><span class="tag">先驰belief</span><span class="tag">感官精確度</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42409678/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧠</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>預測處理如何解釋自閉症中情感價值的預測：一項preregistered研究</h3>
+          <p class="journal-source">Molecular autism</p>
+          <p>此preregistered研究使用計算建模與行為實驗，測試自閉症個體在情感唤醒圖景中預測正負效價（pleasant vs unpleasant）的能力。結果顯示，自閉症群體在預測複雜或社會性情感刺激時準確度較低，但對於純粹感官強度（如音量）的預測則正常。作者解釋為：自閉症可能涉及社會先驰belief的精確度異常，導致對社會線索的預測更新受損。此研究支持預測處理理論在神經發展差異中的應用。</p>
+          <div class="card-footer">
+            <span class="tag">自閉症</span><span class="tag">情感預測</span><span class="tag">貝葉斯腦</span><span class="tag">先驰belief</span><span class="tag">社會認知</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42482104/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🔬</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>揭示預測處理在神經現象學中的羅塞塔石假設：來自預測處理的數學預測</h3>
+          <p class="journal-source">Neuroscience of consciousness</p>
+          <p>此理論論文提出「羅塞塔石假設」，主張預測處理框架能提供一種統一的數學語言，以連接神經活動（特別是階層式預測誤差傳導）與主觀體驗（phenomenology）。作者從自由能原理出發，推導出特定的神經動力學應如何對應於意識的特質，如時間流逝感、自我界限與情感Colour。雖然尚缺乏直接神經驗證，但此框架為將第一人稱體驗與第三人稱神經科學連結提供了形式化途徑。</p>
+          <div class="card-footer">
+            <span class="tag">預測處理</span><span class="tag">神經現象學</span><span class="tag">自由能原理</span><span class="tag">意識建模</span><span class="tag">數理精神科學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42482982/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧬</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>兒童代謝疾病相關特徵的蛋白質組簽名能預測成人疾病結果</h3>
+          <p class="journal-source">Nature metabolism</p>
+          <p>此研究利用縱向隊列資料，分析兒童血液中與心血管代謝風險相關的蛋白質組模式，並追蹤其與中年期代謝疾病（如2型糖尿病、高血壓）的關聯。發現特定的多蛋白質簽名（涉及炎症、脂質代謝與內皮功能）在兒童期即可顯著預測成人疾病風險，獨立於傳統臨床指標。此證據支持早期生物學預警的可行性，並暗示發育早期的生理狀態可能「顯化」為長期健康軌跡。</p>
+          <div class="card-footer">
+            <span class="tag">蛋白質組學</span><span class="tag">兒童健康</span><span class="tag">代謝疾病</span><span class="tag">縱向預測</span><span class="tag">生物標誌物</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42728365/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🤖</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>GPT-4改善心血管患者教育的性別特異性，但可能延續性別偏見：混合方法審計</h3>
+          <p class="journal-source">PLOS digital health</p>
+          <p>此混合方法研究審計GPT-4在生成心血管疾病患者教育材料時的表現。結果顯示，相比舊版模型，GPT-4能更好地區分男性與女性特定風險因素與症狀描述（如胸痛表達差異），提升了資訊的性別敏感性。然而，同時發現模型在風險估計與治療建議上仍延續社會性別刻板印象（如低估女性心血管風險、過度強調男性手術適應症）。研究呼籲在醫療AI中納入性別公平審計機制。</p>
+          <div class="card-footer">
+            <span class="tag">大型語言模型</span><span class="tag">性別偏見</span><span class="tag">患者教育</span><span class="tag">心血管疾病</span><span class="tag">醫療AI</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42721114/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🔍</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>人工智慧在腸胃囊鏡內視鏡中的預期價值：膠囊內視鏡人工智慧聯盟立場聲明</h3>
+          <p class="journal-source">Endoscopy international open</p>
+          <p>此立場聲明由國際專家共同制定，闡述人工智慧在腸胃囊鏡內視鏡（colon capsule endoscopy, CCE）中的潛在價值與挑戰。AI被期望用於自動病灶檢測（如息肉、出血）、減少讀片時間、提升診斷一致性。然而，作者強調目前缺乏標準化驗證框架、多樣化訓練資料與臨床工作流程整合的證據。聲明呼籲建立臨床驗證指標、多中心研究與監管路徑，以確保AI在CCE中的安全與有效應用。</p>
+          <div class="card-footer">
+            <span class="tag">人工智慧</span><span class="tag">腸胃鏡檢查</span><span class="tag">膠囊內視鏡</span><span class="tag">醫療影像</span><span class="tag">臨床決策支援</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42713309/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧪</span>
+            <span class="utility-low utility-sm">低</span>
+          </div>
+          <h3>去殘留培養基中表面活性劑的競爭性吸附如何抑制酵母穩定Pickering乳液中的烷基生物降解</h3>
+          <p class="journal-source">Colloids and surfaces. B, Biointerfaces</p>
+          <p>此研究探討表面活性劑在油-水界面上的競爭吸附如何影響酵母穩定的Pickering乳液中烷基（如十六烷）的生物降解速率。結果顯示，即使微量的合成表面活性劑（如SDS）也會競爭性佔據界面，阻礙酵母細胞接觸油滴，從而顯著降低烷基的生物降解效率。此機制揭示了微量污染物如何間接抑制生物修復過程，具有環境科學與生物技術應用的啟發性。</p>
+          <div class="card-footer">
+            <span class="tag">表面活性劑</span><span class="tag">界面科學</span><span class="tag">生物降解</span><span class="tag">Pickering乳液</span><span class="tag">環境微生物學</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42710376/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">Imagery &amp; Goal Pursuit</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">28</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Predictive Processing &amp; Belief</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:32%"></div></div>
+          <span class="topic-count">9</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Expectancy &amp; Placebo</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:7%"></div></div>
+          <span class="topic-count">2</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">Direct Manifestation</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:75%"></div></div>
+          <span class="topic-count">21</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">顯化</span><span class="keyword">manifestation</span><span class="keyword">期望效應</span><span class="keyword">安慰劑</span><span class="keyword">開放標籤安慰劑</span><span class="keyword">心智意象</span><span class="keyword">視覺化</span><span class="keyword">目標設定</span><span class="keyword">自我效能</span><span class="keyword">樂觀</span><span class="keyword">信念形成</span><span class="keyword">預測處理</span><span class="keyword">貝葉斯腦</span><span class="keyword">先驰belief</span><span class="keyword">自由能原理</span><span class="keyword">人工智慧</span><span class="keyword">AI</span><span class="keyword">生成式AI</span><span class="keyword">全像視覺化</span><span class="keyword">醫療影像</span><span class="keyword">機器學習</span><span class="keyword">深度學習</span><span class="keyword">神經科學</span><span class="keyword">髮皮質醇</span><span class="keyword">壓力生物標誌</span><span class="keyword">情感共鳴</span><span class="keyword">美學評價</span><span class="keyword">作者歸屬</span><span class="keyword">預測誤差</span><span class="keyword">神經振幅</span><span class="keyword">自閉症</span><span class="keyword">情感預測</span><span class="keyword">神經現象學</span><span class="keyword">蛋白質組學</span><span class="keyword">兒童健康</span><span class="keyword">代謝疾病</span><span class="keyword">縱向研究</span><span class="keyword">性別偏見</span><span class="keyword">大型語言模型</span><span class="keyword">GPT-4</span><span class="keyword">患者教育</span><span class="keyword">膠囊內視鏡</span><span class="keyword">腸胃鏡檢查</span><span class="keyword">界面科學</span><span class="keyword">表面活性劑</span><span class="keyword">生物降解</span><span class="keyword">Pickering乳液</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
