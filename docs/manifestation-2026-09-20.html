@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manifestation Research &middot; 顯化研究文獻周報 &middot; 2026年9月20日</title>
+<meta name="description" content="2026年9月20日 顯化研究文獻周報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 120px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .ext-link { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .ext-link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .ext-link .ext-icon { font-size: 28px; }
+  .ext-link .ext-label { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.4; }
+  .ext-link .ext-sub { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">✨</div>
+    <div class="header-text">
+      <h1>Manifestation Research &middot; 顯化研究文獻周報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年9月20日（週日）</span>
+        <span class="badge badge-count">📊 60 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron 3 Super</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📋 本週文獻趨勢</h2>
+    <p class="summary-text">本週文獻聚焦於預測處理、期望效應與神經認知機制，特別是安慰劑/無慰劑效應、信念形成與神經可塑性方面的研究較為突出。多篇研究探討期望如何調節疼痛、認知與情感處理，涉及 EEG、fMRI 及行為實驗。此外，成像技術（如 4D 超音波、光子計數 CT、量子點探針）在醫學與神經科學中的應用亦是熱門主題，顯示影像技術進步對機制探索的推動作用。心理層面方面，不確定性 intolerance 與學業倦怠、心理彈性的關聯獲得關注，反映出個人差異在目標追求與壓力調節中的角色。雖然有少量研究觸及「顯化」或「吸引力法則」的相關概念（如心智意象、目標設定、正向幻想），但多為間接測量或神經基礎探討，缺乏直接檢視顯化實踐效果的實驗。總體而言，本週文獻傾向於基礎神經科學與認知心理學，實證支持顯化概念的臨床或應用層面研究仍較為有限。</p>
+  </div>
+
+  <div class='section'><div class='section-title'><span class='section-icon'>⭐</span>本週精選 TOP Picks</div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#1</span>
+            <span class="emoji-icon">🧠</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>預期違反的神經效應在不同感官模態間泛化</h3>
+          <p class="journal-source">Communications biology &middot; Neural effects of expectation violation generalise across sensory modalities</p>
+          <p>此研究使用多感官範式結合 EEG 測量，探討預期違反（expectation violation）如何在視覺、聽覺與觸覺模態中產生一致的神經反應。結果顯示，當感官輸入與預期不符時，無論是哪種感官模態，都會觸及類似的腦電位變化（特別是 P3 成分），支持預測處理理論中關於跨模態預測誤差編碼的假設。此發現強調大腦使用一套共享的預測框架來監測感官輸入，而非依賴模態特定的機制。對於理解期望如何塑造感知（如安慰劑效應）具有基礎意義。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">健康成人參與者</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">多感官預期違反任務（視覺/聽覺/觸覺）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">預期符合的對照條件</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">跨模態一致的神經反應（特別是額葉中線 P3 振幅增加）</span></div></div>
+          <div class="card-footer">
+            <span class="tag">預測處理</span><span class="tag">期望違反</span><span class="tag">跨模態整合</span><span class="tag">EEG</span><span class="tag">P3</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42393265/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#2</span>
+            <span class="emoji-icon">💊</span>
+            <span class="utility-high">高實用性</span>
+          </div>
+          <h3>安慰劑與無慰劑效應對認知的影響：機制、調節因子與認知資源限制</h3>
+          <p class="journal-source">Neuroscience and biobehavioral reviews &middot; Placebo and Nocebo Effects on Cognition: Mechanisms, Mediators, and Cognitive Resource Constraints</p>
+          <p>此文為系統性综述，整合近年關於安慰劑與無慰劑如何影響認知功能（如記憶、注意、執行功能）的實證研究。作者提出，這些效應並非僅由期望驅動，而是涉及多重機制：條件反射、神經遞質釋放（如多巴胺、內啡肽）、動機調節以及認知資源的重新分配。特別強調，當認知負荷高時，安慰劑效應可能被削弱，因為期望無法完全補償資源限制。此觀點將傳統的「期望模型」擴展為更動態的資源分配框架，對臨床試驗設計與症狀管理具有重要啟發。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">橫跨健康與臨床族群的實驗研究</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">安慰劑/無慰劑干預（藥物或行為）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無處理或安慰劑對照</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">認知表現的變化（記憶、注意、反應時間等）及其神經生理相關</span></div></div>
+          <div class="card-footer">
+            <span class="tag">安慰劑效應</span><span class="tag">無慰劑效應</span><span class="tag">認知</span><span class="tag">期望</span><span class="tag">多巴胺</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42759622/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card featured">
+          <div class="card-header">
+            <span class="rank-badge">#3</span>
+            <span class="emoji-icon">🔮</span>
+            <span class="utility-mid">中實用性</span>
+          </div>
+          <h3>不確定性 intolerant 與學業倦怠的關聯：未來時間視角的中介與心理彈性的調節作用</h3>
+          <p class="journal-source">Frontiers in psychology &middot; The relationship between intolerance of uncertainty and academic burnout among university students: the mediating role of future time perspective and the moderating role of psychological flexibility</p>
+          <p>此橫斷式研究調查了大學生對不確定性的無法容忍度（intolerance of uncertainty, IU）如何透過未來時間視角（future time perspective, FTP）影響學業倦怠，並探討心理彈性（psychological flexibility）是否調節此路徑。結果顯示，IU 與學業倦怠正相關，此關聯部分由消極的 FTP 中介（即對未來機會感到有限）；而心理彈性顯著調節了 IU 對 FTP 的影響，彈性高者即使 IU 高也不易發展出消極的未來視角。此研究突顯認知與情感調節策略在預防學業壓力中的角色，與目標設定與自我效能的理論有直接連結。</p>
+          <div class="pico-grid"><div class="pico-item"><span class="pico-label">P</span><span class="pico-text">大學生樣本（具體 N 未在摘要中明確）</span></div>
+<div class="pico-item"><span class="pico-label">I</span><span class="pico-text">不確定性 intolerance 程度（自報量表）</span></div>
+<div class="pico-item"><span class="pico-label">C</span><span class="pico-text">無明確對照組（橫斷式相關設計）</span></div>
+<div class="pico-item"><span class="pico-label">O</span><span class="pico-text">學業倦怠程度，經未來時間視角中介，心理彈性調節</span></div></div>
+          <div class="card-footer">
+            <span class="tag">不確定性 intolerance</span><span class="tag">學業倦怠</span><span class="tag">未來時間視角</span><span class="tag">心理彈性</span><span class="tag">大學生心理健康</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42741386/" target="_blank">閱讀原文 &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='section'><div class='section-title'><span class='section-icon'>📚</span>其他值得關注的文獻</div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📄</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>咖啡因急性攝取對早晨體溫、情緒、反應敏捷性及認知測量的影響：標準化方法研究</h3>
+          <p class="journal-source">Nutrients</p>
+          <p>此研究探討單次咖啡因攝取（3 mg/kg）對健康男性在早晨的生理與認知影響。結果顯示，咖啡因顯著提升警覺度與反應時間，但對情緒影響複雜（初期增加焦慮，後續提升活力），且對體溫無顯著影響。雖未直接測量期望效應，但設計中包含雙盲條件，間接支持其生理效應超越單純期望。</p>
+          <div class="card-footer">
+            <span class="tag">咖啡因</span><span class="tag">認知</span><span class="tag">情緒</span><span class="tag">反應時間</span><span class="tag">雙盲</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42738944/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📊</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>疼痛研究中安慰劑與無慰劑效應的科學計量分析：從機制到臨床試驗</h3>
+          <p class="journal-source">Journal of evaluation in clinical practice</p>
+          <p>透過文獻計量學方法，此研究映射了過去十年疼痛領域安慰劑與無慰劑研究的發展趨勢。發現機制研究（特別是神經成像與遺傳學）佔比上升，但臨床試驗中安慰劑反應仍是主要混雜因子。作者呼籲改進試驗設計，例如使用積極對照或期望操縱，以更好地隔離真實藥物效應。此工具性研究對改善疼痛藥物評價具有實用價值。</p>
+          <div class="card-footer">
+            <span class="tag">安慰劑效應</span><span class="tag">無慰劑效應</span><span class="tag">疼痛研究</span><span class="tag">科學計量學</span><span class="tag">臨床試驗設計</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42732563/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧪</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>支持性腫瘤科症狀試驗中安慰劑反應增強：機制、方法論挑戰與設計啟示</h3>
+          <p class="journal-source">Supportive care in cancer : official journal of the Multinational Association of Supportive Care in Cancer</p>
+          <p>此觀點文章探討為何在支持性腫瘤科試驗中（如疲乏、食慾不振），安慰劑組的改善幅度隨時間增加，可能掩蓋真實藥物效應。作者歸因於試驗參與者的高期望、頻繁接觸醫療團隊（增加關懷效應）以及評估工具的主觀性。提出解決方案包括嚴格的期望控制、使用客觀生物標誌物以及採用混合方法評估症狀。對提升癌症支持性護理研究的內部效度具有指導意義。</p>
+          <div class="card-footer">
+            <span class="tag">安慰劑效應</span><span class="tag">腫瘤科</span><span class="tag">症狀試驗</span><span class="tag">期望</span><span class="tag">方法學改進</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42728481/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🔁</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>自我調節中的脫離與主動：行動控制在自發心智對比中的作用</h3>
+          <p class="journal-source">Acta psychologica</p>
+          <p>此研究探討行動控制（action control）如何影響個人在自發進行心智對比（mental contrasting）時從幻想脫離並採取行動的能力。心智對比為一種自我調節技巧，涉及設想目標與預見障礙。結果顯示，行動控制能力強者更能從目標幻想中脫離並將注意力轉向行動規劃，尤其在目標具挑戰性時。此發現支持自我調節理論中關於「脫離」與「主動」兩個階段的重要性，並暗示訓練行動控制可能增強目標達成的效果。</p>
+          <div class="card-footer">
+            <span class="tag">心智對比</span><span class="tag">行動控制</span><span class="tag">自我調節</span><span class="tag">目標設定</span><span class="tag">行動啟動</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42731407/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧠</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>魔術與認知：認知與神經過程的實證證據範圍回顧</h3>
+          <p class="journal-source">Frontiers in psychology</p>
+          <p>此範圍回顧整合了關於觀看魔術表演如何影響認知功能（如注意、記憶、因果推理）的實證研究。作者發現魔術能有效操縱預期與注意力，常利用誤導（misdirection）製造驚奇，同時激發反事実思考。神經層面研究尚少，但初步證據顯示前額葉與顳葉活動與驚奇感相關。此研究連結了預期操縱、驚奇與認知靈活性，對理解期望如何改變知覺具啟發性。</p>
+          <div class="card-footer">
+            <span class="tag">魔術</span><span class="tag">認知</span><span class="tag">預期</span><span class="tag">注意力</span><span class="tag">誤導</span><span class="tag">驚奇</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42755636/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">⚙️</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>內在貝葉斯精度調節社會注意的神經表徵：透過模型告知的多變量 EEG 分析區分隱含與顯式成分</h3>
+          <p class="journal-source">Cognition</p>
+          <p>此研究使用模型告知的多變量 EEG 分析，探討個人內在的貝葉斯精度（即對預期的確信度）如何影響社會注意的神經處理。結果顯示，當個人對社會線索（如眼神方向）有高確信度時，腦對該線索的表徵增強；反之，當不確定時，即使行為上表現出注意（顯式），神經反應卻較弱。此發現區分了行為上的注意與神經上的處理深度，支持預測處理理論中精度加權的概念，並暗示社會焦慮等狀態可能源於精度估計失調。</p>
+          <div class="card-footer">
+            <span class="tag">貝葉斯</span><span class="tag">社會注意</span><span class="tag">預測處理</span><span class="tag">EEG</span><span class="tag">精度加權</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42735643/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">📈</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>事件相關電位解釋大腦預測編碼</h3>
+          <p class="journal-source">Cognitive neurodynamics</p>
+          <p>此理論性與實證結合的研究提出，事件相關電位（ERP）中的特定成分（如 MMN、P3a）可視為大腦預測編碼（predictive coding）的神經指標。作者整合實驗數據顯示，當感官輸入與預期不符時，早期負向成分（MMN 對應局部預測誤差）及後續正向成分（P3a 對應注意轉移）會被系統性激發。此框架將認知神經波形與預測處理的計算理論連結，為理解期望如何塑造感知提供了可測量的神經基礎。</p>
+          <div class="card-footer">
+            <span class="tag">預測編碼</span><span class="tag">事件相關電位</span><span class="tag">MMN</span><span class="tag">P3a</span><span class="tag">預期誤差</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42389047/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🎵</span>
+            <span class="utility-mid utility-sm">中</span>
+          </div>
+          <h3>預期性與主題特定的神經振盪預測詩歌的審美評價</h3>
+          <p class="journal-source">Proceedings of the National Academy of Sciences of the United States of America</p>
+          <p>此研究使用 EEG 測量詩歌欣賞過程中的腦波活動，發現詩歌朗讀開始前的α帶振盪功率（反映預期狀態）以及特定主題（如自然、愛情）出現時的θ帶同步性，能夠預測個人事後的審美評分。結果顯示，期望狀態（經α波調節）與即時神經追蹤（經θ波調節）共同塑造主觀體驗。此研究提供了神經證據，支持期望在美學判斷中的建構性角色，與預測處理理論在複雜刺激中的應用一致。</p>
+          <div class="card-footer">
+            <span class="tag">神經振盪</span><span class="tag">預期</span><span class="tag">審美評價</span><span class="tag">詩歌</span><span class="tag">EEG</span><span class="tag">α波</span><span class="tag">θ波</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42378285/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="card-header-row">
+            <span class="emoji-sm">🧠</span>
+            <span class="utility-high utility-sm">高</span>
+          </div>
+          <h3>與壓力相關的神經可塑性與發育脆弱性在功能性神經障礙中的作用：從不良經驗到 maladaptive 過學習</h3>
+          <p class="journal-source">Frontiers in molecular neuroscience</p>
+          <p>此理論性綜述提出，功能性神經障礙（FND）的症狀可能源於壓力誘發的神經可塑性變化，特別是在那些發育早期經歷過創傷或忽視的個體中。作者認為，重複的壓力或關注強化可能導致某些神經回路的「過學習」（overlearning），使得身體症狀在缺乏明顯病理基礎的情況下自動觸發。此模式整合了預測處理（期望強化症狀表徵）、學習理論與創傷後遺症，為理解身體症狀如何成為心理痛苦的表達提供了機制性解釋。</p>
+          <div class="card-footer">
+            <span class="tag">功能性神經障礙</span><span class="tag">神經可塑性</span><span class="tag">壓力</span><span class="tag">過學習</span><span class="tag">創傷</span><span class="tag">預測處理</span>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42376131/" target="_blank">PubMed &rarr;</a>
+          </div>
+        </div>
+      </div>
+  <div class='topic-section section'><div class='section-title'><span class='section-icon'>📊</span>主題分佈</div>
+        <div class="topic-row">
+          <span class="topic-name">預測處理與期望效應</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:67%"></div></div>
+          <span class="topic-count">8</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">安慰劑與無慰劑效應</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:42%"></div></div>
+          <span class="topic-count">5</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">神經影像與感測技術</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+          <span class="topic-count">12</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">認知與注意力調節</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:58%"></div></div>
+          <span class="topic-count">7</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">心理健康與壓力反應</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:50%"></div></div>
+          <span class="topic-count">6</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">目標設定與自我調節</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:33%"></div></div>
+          <span class="topic-count">4</span>
+        </div>
+        <div class="topic-row">
+          <span class="topic-name">身體體驗與 somatic 症狀</span>
+          <div class="topic-bar-bg"><div class="topic-bar" style="width:25%"></div></div>
+          <span class="topic-count">3</span>
+        </div>
+      </div>
+  <div class='keywords-section section'><div class='section-title'><span class='section-icon'>🏷️</span>關鍵字</div><div class='keywords'><span class="keyword">預測處理</span><span class="keyword">期望效應</span><span class="keyword">安慰劑</span><span class="keyword">無慰劑</span><span class="keyword">神經可塑性</span><span class="keyword">EEG</span><span class="keyword">fMRI</span><span class="keyword">注意力</span><span class="keyword">目標設定</span><span class="keyword">心智意象</span><span class="keyword">自我效能</span><span class="keyword">不確定性 intolerance</span><span class="keyword">心理彈性</span><span class="keyword">功能性神經障礙</span><span class="keyword">過學習</span><span class="keyword">魔術</span><span class="keyword">驚奇</span><span class="keyword">認知偏誤</span><span class="keyword">貝葉斯模型</span><span class="keyword">精度加權</span><span class="keyword">事件相關電位</span><span class="keyword">MMN</span><span class="keyword">P3</span><span class="keyword">α波</span><span class="keyword">θ波</span><span class="keyword">多巴胺</span><span class="keyword">內啡肽</span><span class="keyword">條件反射</span><span class="keyword">臨床試驗設計</span><span class="keyword">症狀測量</span><span class="keyword">疲乏</span><span class="keyword">疼痛</span><span class="keyword">社會注意</span><span class="keyword">預期違反</span><span class="keyword">跨模態整合</span><span class="keyword">神經振盪</span><span class="keyword">審美評價</span><span class="keyword">詩歌</span><span class="keyword">行動控制</span><span class="keyword">心智對比</span><span class="keyword">未來時間視角</span><span class="keyword">學業倦怠</span><span class="keyword">壓力</span><span class="keyword">創傷</span><span class="keyword">功能性神經障礙</span></div></div>
+
+  
+  <div class="links-grid">
+    <a href="https://www.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">🏥</span>
+      <span class="ext-label">李政洋身心診所</span>
+      <span class="ext-sub">官網首頁</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">📩</span>
+      <span class="ext-label">訂閱電子報</span>
+      <span class="ext-sub">最新衛教文章</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="ext-link" target="_blank" rel="noopener">
+      <span class="ext-icon">☕</span>
+      <span class="ext-label">Buy Me a Coffee</span>
+      <span class="ext-sub">支持本計畫</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：NVIDIA Nemotron 3 Super</span>
+    <span><a href="../index.html">返回總覽</a> &middot; <a href="https://github.com/u8901006/Manifestation-Research">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
