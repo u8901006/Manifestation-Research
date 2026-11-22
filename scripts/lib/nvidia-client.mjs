@@ -11,7 +11,7 @@ const MAX_TOKENS = Math.min(
 
 const MODEL_CHAIN = (
   process.env.NVIDIA_MODELS ||
-  'nvidia/nemotron-3-super-120b-a12b,nvidia/nemotron-3-nano-30b-a3b'
+  'mistralai/mistral-large-4-1t-a52b,nvidia/nemotron-3-ultra-550b-a55b'
 )
   .split(',')
   .map((m) => m.trim())
@@ -63,8 +63,11 @@ async function callOnce(model, messages, opts) {
     top_p: 0.95,
     max_tokens: opts.maxTokens,
     stream: false,
-    chat_template_kwargs: { enable_thinking: false },
   };
+
+  if (model.startsWith('nvidia/nemotron-')) {
+    body.chat_template_kwargs = { enable_thinking: false };
+  }
 
   if (opts.jsonMode) {
     body.response_format = { type: 'json_object' };
