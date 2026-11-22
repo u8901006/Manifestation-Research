@@ -11,7 +11,7 @@ const MAX_TOKENS = Math.min(
 
 const MODEL_CHAIN = (
   process.env.NVIDIA_MODELS ||
-  'mistralai/mistral-large-4-1t-a52b,nvidia/nemotron-3-ultra-550b-a55b'
+  'nvidia/nemotron-3.5-super-vl-120b-a12b,mistralai/mistral-large-4-1t-a52b'
 )
   .split(',')
   .map((m) => m.trim())
@@ -69,7 +69,7 @@ async function callOnce(model, messages, opts) {
     body.chat_template_kwargs = { enable_thinking: false };
   }
 
-  if (opts.jsonMode) {
+  if (opts.jsonMode && !model.startsWith('nvidia/nemotron-3.5-')) {
     body.response_format = { type: 'json_object' };
   }
 
