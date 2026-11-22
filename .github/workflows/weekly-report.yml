@@ -84,13 +84,13 @@ jobs:
         env:
           TARGET_DATE: ${{ steps.date.outputs.target }}
 
-      - name: Generate report with NVIDIA Nemotron
+      - name: Generate report with NVIDIA AI
         env:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           NVIDIA_API_BASE: https://integrate.api.nvidia.com/v1
           NVIDIA_TIMEOUT_MS: "480000"
           NVIDIA_MAX_TOKENS: "16384"
-          NVIDIA_MODELS: "nvidia/nemotron-3-ultra-550b-a55b,openai/gpt-oss-120b"
+          NVIDIA_MODELS: "mistralai/mistral-large-4-1t-a52b,nvidia/nemotron-3-ultra-550b-a55b"
           REPORT_DATE: ${{ steps.date.outputs.target }}
         run: |
           node scripts/generate-report.mjs \
