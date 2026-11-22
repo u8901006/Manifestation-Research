@@ -90,7 +90,7 @@ jobs:
           NVIDIA_API_BASE: https://integrate.api.nvidia.com/v1
           NVIDIA_TIMEOUT_MS: "480000"
           NVIDIA_MAX_TOKENS: "16384"
-          NVIDIA_MODELS: "mistralai/mistral-large-4-1t-a52b,nvidia/nemotron-3-ultra-550b-a55b"
+          NVIDIA_MODELS: "nvidia/nemotron-3.5-super-vl-120b-a12b,mistralai/mistral-large-4-1t-a52b"
           REPORT_DATE: ${{ steps.date.outputs.target }}
         run: |
           node scripts/generate-report.mjs \
